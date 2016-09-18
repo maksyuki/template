@@ -1,19 +1,9 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim7.1ÔÚwindowsÏÂµÄ±àÂëÉèÖÃ¡£By Huadong.Liu
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set encoding=utf-8
-set fileencodings=utf-8,chinese,latin-1
-if has("win32")
-set fileencoding=chinese
-else
-set fileencoding=utf-8
-endif
-"½â¾ö²Ëµ¥ÂÒÂë
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
-"½â¾öconsleÊä³öÂÒÂë
-language messages zh_CN.utf-8
-
+"ç¼–ç è®¾ç½®
+set enc=utf-8
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+"è¯­è¨€è®¾ç½®
+set langmenu=zh_CN.UTF-8
+set helplang=cn
 
 "Set the status line options. Make it show more information.
 set laststatus=2
@@ -21,69 +11,65 @@ set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\[POS=%l,%v][%p%%]\ %{strft
 
 "Set Color Scheme and Font Options
 colorscheme monokai
-"colorscheme solarized
-syntax on 					"Óï·¨¸ßÁÁ
+syntax on              "è¯­æ³•é«˜äº®
 syntax enable
-set guifont=Consolas:h13
-"set gfw=Ó×Ô²:h10.5:cGB2312
-"set guifont=Monospace\ 11
-"set line no, buffer, search, highlight, autoindent and more.
-set nu              		"ÏÔÊ¾ĞĞºÅ
-set go= 			 		"²»ÏÔÊ¾¹¤¾ßÀ¸
-"set lines=50 columns=160
+
+set nu                 "æ˜¾ç¤ºè¡Œå·
+set go=                "ä¸æ˜¾ç¤ºå·¥å…·æ 
 set ai!
 set hidden
-set cursorline
+set cursorline         "çªå‡ºæ˜¾ç¤ºå½“å‰è¡Œ
 set nobackup
-set ignorecase 				"²éÕÒÊ±ºöÂÔ´óĞ¡Ğ´
-set incsearch 				"ÉèÖÃ¿ìËÙËÑË÷(ÊäÈë´ı²éÕÒÄÚÈİµÄÍ¬Ê±£¬¾Í¿ªÊ¼Æ¥ÅäÄÚÈİ)
+set ignorecase         "æŸ¥æ‰¾æ—¶å¿½ç•¥å¤§å°å†™
+set incsearch          "è®¾ç½®å¿«é€Ÿæœç´¢(è¾“å…¥å¾…æŸ¥æ‰¾å†…å®¹çš„åŒæ—¶ï¼Œå°±å¼€å§‹åŒ¹é…å†…å®¹)
 
-"------Ëõ½ø------
-"ÔÚÕâÖÖËõ½øĞÎÊ½ÖĞ£¬ĞÂÔö¼ÓµÄĞĞºÍÇ°Ò»ĞĞÊ¹ÓÃÏàÍ¬µÄËõ½øĞÎÊ½¡£¿ÉÒÔÊ¹ÓÃÒÔÏÂÃüÁî£¬ÆôÓÃautoindentËõ½øĞÎÊ½
+"------ç¼©è¿›------
+"åœ¨è¿™ç§ç¼©è¿›å½¢å¼ä¸­ï¼Œæ–°å¢åŠ çš„è¡Œå’Œå‰ä¸€è¡Œä½¿ç”¨ç›¸åŒçš„ç¼©è¿›å½¢å¼ã€‚å¯ä»¥ä½¿ç”¨ä»¥ä¸‹å‘½ä»¤ï¼Œå¯ç”¨autoindentç¼©è¿›å½¢å¼
 set autoindent
 
-"ÔÚÕâÖÖËõ½øÄ£Ê½ÖĞ£¬Ã¿Ò»ĞĞ¶¼ºÍÇ°Ò»ĞĞÓĞÏàÍ¬µÄËõ½øÁ¿£¬Í¬Ê±ÕâÖÖËõ½øĞÎÊ½ÄÜÕıÈ·µÄÊ¶±ğ³ö»¨À¨ºÅ£¬µ±Óöµ½ÓÒ»¨À¨ºÅ£¨}£©£¬ÔòÈ¡ÏûËõ½øĞÎÊ½¡£´ËÍâ»¹Ôö¼ÓÁËÊ¶±ğCÓïÑÔ¹Ø¼ü×ÖµÄ¹¦ÄÜ¡£Èç¹ûÒ»ĞĞÊÇÒÔ#¿ªÍ·µÄ£¬ÄÇÃ´ÕâÖÖ¸ñÊ½½«»á±»ÌØÊâ¶Ô´ı¶ø²»²ÉÓÃËõ½ø¸ñÊ½¡£¿ÉÒÔÊ¹ÓÃÒÔÏÂÃüÁî£¬ÆôÓÃsmartindentËõ½ø½á¹¹
-set smartindent 			"ÖÇÄÜµÄÑ¡Ôñ¶ÔÆğ·½Ê½
+"åœ¨è¿™ç§ç¼©è¿›æ¨¡å¼ä¸­ï¼Œæ¯ä¸€è¡Œéƒ½å’Œå‰ä¸€è¡Œæœ‰ç›¸åŒçš„ç¼©è¿›é‡ï¼ŒåŒæ—¶è¿™ç§ç¼©è¿›å½¢å¼èƒ½æ­£ç¡®çš„è¯†åˆ«å‡ºèŠ±æ‹¬å·ï¼Œå½“é‡åˆ°å³èŠ±æ‹¬å·ï¼ˆ}ï¼‰ï¼Œåˆ™å–æ¶ˆç¼©è¿›å½¢å¼ã€‚æ­¤å¤–è¿˜å¢åŠ äº†è¯†åˆ«Cè¯­è¨€å…³é”®å­—çš„åŠŸèƒ½ã€‚å¦‚æœä¸€è¡Œæ˜¯ä»¥#å¼€å¤´çš„ï¼Œé‚£ä¹ˆè¿™ç§æ ¼å¼å°†ä¼šè¢«ç‰¹æ®Šå¯¹å¾…è€Œä¸é‡‡ç”¨ç¼©è¿›æ ¼å¼ã€‚å¯ä»¥ä½¿ç”¨ä»¥ä¸‹å‘½ä»¤ï¼Œå¯ç”¨smartindentç¼©è¿›ç»“æ„
+set smartindent 			"æ™ºèƒ½çš„é€‰æ‹©å¯¹èµ·æ–¹å¼
 
-"Vim¿ÉÒÔºÜºÃµÄÊ¶±ğ³öCºÍJavaµÈ½á¹¹»¯³ÌĞòÉè¼ÆÓïÑÔ£¬²¢ÇÒÄÜÓÃCÓïÑÔµÄËõ½ø¸ñÊ½À´´¦Àí³ÌĞòµÄËõ½ø½á¹¹¡£¿ÉÒÔÊ¹ÓÃÒÔÏÂÃüÁî£¬ÆôÓÃcindentËõ½ø½á¹¹
+"Vimå¯ä»¥å¾ˆå¥½çš„è¯†åˆ«å‡ºCå’ŒJavaç­‰ç»“æ„åŒ–ç¨‹åºè®¾è®¡è¯­è¨€ï¼Œå¹¶ä¸”èƒ½ç”¨Cè¯­è¨€çš„ç¼©è¿›æ ¼å¼æ¥å¤„ç†ç¨‹åºçš„ç¼©è¿›ç»“æ„ã€‚å¯ä»¥ä½¿ç”¨ä»¥ä¸‹å‘½ä»¤ï¼Œå¯ç”¨cindentç¼©è¿›ç»“æ„
 set cindent shiftwidth=4
 
 "set smarttab "
-set tabstop=4 				"ÉèÖÃtab¼üÎª4¸ö¿Õ¸ñ
-set shiftwidth=4 			"½«»»ĞĞ×Ô¶¯Ëõ½øÉèÖÃ³É4¸ö¿Õ¸ñ
+set expandtab               "ç”¨spaceæ›¿ä»£tabçš„è¾“å…¥
+set tabstop=4 				"è®¾ç½®tabé”®ä¸º4ä¸ªç©ºæ ¼
+set shiftwidth=4 			"å°†æ¢è¡Œè‡ªåŠ¨ç¼©è¿›è®¾ç½®æˆ4ä¸ªç©ºæ ¼
 set backspace=2
-"if &filetype == "python"
-"    set expandtab
-"endif
-"set expandtab 				"²åÈëtabÖ®ºó»á½«tab±ä³É4¸ö¿Õ¸ñ(°´backspace»á²ì¾õ)
-"imap { {}<ESC>i<CR><ESC>V<O
 
 set smartcase
-set showmatch 				"À¨ºÅÆ¥Åä
-set ruler 					"ÓÒÏÂ½ÇÏÔÊ¾¹â±ê×´Ì¬ĞĞ
+set showmatch 				"æ‹¬å·åŒ¹é…
+set ruler 					"å³ä¸‹è§’æ˜¾ç¤ºå…‰æ ‡çŠ¶æ€è¡Œ
 set vb
-set viminfo+=n$VIM/_viminfo
+"set viminfo+=n$VIM/_viminfo
 set noerrorbells
-set showcmd					"ÔÚµ×²¿ÏÔÊ¾ÊäÈëµÄÃüÁî
-set mouse=a 				"Ê¹ÓÃÊó±ê
-set history=1000 			"ÃüÁî»òÕßÊÇ²éÕÒ¼ÇÂ¼µÄÀúÊ·¸öÊı
+set showcmd					"åœ¨åº•éƒ¨æ˜¾ç¤ºè¾“å…¥çš„å‘½ä»¤
+set mouse=a 				"ä½¿ç”¨é¼ æ ‡
+set history=1000 			"å‘½ä»¤æˆ–è€…æ˜¯æŸ¥æ‰¾è®°å½•çš„å†å²ä¸ªæ•°
 set undolevels=1000
-"set t_Co=256
+
+set foldenable              "å…è®¸æŠ˜å 
+set foldmethod=manual       "æ‰‹åŠ¨æŠ˜å 
+set nocompatible            "å»æ‰è®¨åŒçš„æœ‰å…³viä¸€è‡´æ€§æ¨¡å¼ï¼Œé¿å…ä»¥å‰ç‰ˆæœ¬çš„ä¸€äº›bugå’Œå±€é™
+
+set autoread                "è®¾ç½®å½“æ–‡ä»¶è¢«æ”¹åŠ¨æ—¶è‡ªåŠ¨è½½å…¥
+set autowrite               "è‡ªåŠ¨ä¿å­˜
 
 "set the Default Code
-
 map <F2> :call TitleDet()<CR>
 func SetTitle()
 if &filetype == "cpp"
     let l = 0
     let l = l + 1 | call setline(l,'/**************************************************')
     let l = l + 1 | call setline(l,'filename       :'.expand('%:t'))
-    let l = l + 1 | call setline(l,'author         :supermaker')
+    let l = l + 1 | call setline(l,'author         :maksyuki')
     let l = l + 1 | call setline(l,'created time   :'.strftime('%c'))
     let l = l + 1 | call setline(l,'last modified  :'.strftime('%c'))
     let l = l + 1 | call setline(l,'file location  :'.getcwd())
     let l = l + 1 | call setline(l,'***************************************************/')
-    let l = l + 1 | call setline(l,'') 
+    let l = l + 1 | call setline(l,'')
     let l = l + 1 | call setline(l,'#pragma comment(linker, "/STACK:102400000,102400000")')
     let l = l + 1 | call setline(l,'#include <set>')
     let l = l + 1 | call setline(l,'#include <bitset>')
@@ -115,8 +101,8 @@ if &filetype == "cpp"
     let l = l + 1 | call setline(l,'#include <cassert>')
     let l = l + 1 | call setline(l,'using namespace std;')
     let l = l + 1 | call setline(l,'')
-    let l = l + 1 | call setline(l,'#define CFF freopen ("aaa.txt", "r", stdin)')
-    let l = l + 1 | call setline(l,'#define CPPFF ifstream cin ("aaa.txt")')
+    let l = l + 1 | call setline(l,'#define CFF freopen ("in", "r", stdin)')
+    let l = l + 1 | call setline(l,'#define CPPFF ifstream cin ("in")')
     let l = l + 1 | call setline(l,'#define	DB(ccc)	cout << #ccc << " = " << ccc << endl')
     let l = l + 1 | call setline(l,'#define PB push_back')
     let l = l + 1 | call setline(l,'#define MP(A, B) make_pair(A, B)')
@@ -144,7 +130,7 @@ elseif &filetype == "python"
     let l = 0
     let l = l + 1 | call setline(l,'#!/usr/bin/python')
     let l = l + 1 | call setline(l,'#filename       :'.expand('%:t'))
-    let l = l + 1 | call setline(l,'#author         :Yuchi Miao')
+    let l = l + 1 | call setline(l,'#author         :Miao Yuchi')
     let l = l + 1 | call setline(l,'#created time   :'.strftime('%c'))
     let l = l + 1 | call setline(l,'#last modified  :'.strftime('%c'))
     let l = l + 1 | call setline(l,'#python_version :2.7.6')
@@ -156,9 +142,9 @@ elseif &filetype == "python"
 endif
 endfunc
 
-autocmd BufWritePre,FileWritePre *.py ks|call UpdateTitle()|'s 
-autocmd BufWritePre,FileWritePre *.cpp ks|call UpdateTitle()|'s 
-"¸üĞÂ×î½üĞŞ¸ÄÊ±¼äºÍÎÄ¼şÃû
+autocmd BufWritePre,FileWritePre *.py ks|call UpdateTitle()|'s
+autocmd BufWritePre,FileWritePre *.cpp ks|call UpdateTitle()|'s
+"æ›´æ–°æœ€è¿‘ä¿®æ”¹æ—¶é—´å’Œæ–‡ä»¶å
 function UpdateTitle()
     normal m'
     execute '/last modified  :/s@:.*$@\=":".strftime("%c")@'
@@ -169,13 +155,13 @@ function UpdateTitle()
     normal 'k
     echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
 endfunction
-"ÅĞ¶ÏÇ°10ĞĞ´úÂëÀïÃæ£¬ÊÇ·ñÓĞLast modifiedÕâ¸öµ¥´Ê£¬
-"Èç¹ûÃ»ÓĞµÄ»°£¬´ú±íÃ»ÓĞÌí¼Ó¹ı×÷ÕßĞÅÏ¢£¬ĞèÒªĞÂÌí¼Ó£»
-"Èç¹ûÓĞµÄ»°£¬ÄÇÃ´Ö»ĞèÒª¸üĞÂ¼´¿É
+"åˆ¤æ–­å‰10è¡Œä»£ç é‡Œé¢ï¼Œæ˜¯å¦æœ‰Last modifiedè¿™ä¸ªå•è¯ï¼Œ
+"å¦‚æœæ²¡æœ‰çš„è¯ï¼Œä»£è¡¨æ²¡æœ‰æ·»åŠ è¿‡ä½œè€…ä¿¡æ¯ï¼Œéœ€è¦æ–°æ·»åŠ ï¼›
+"å¦‚æœæœ‰çš„è¯ï¼Œé‚£ä¹ˆåªéœ€è¦æ›´æ–°å³å¯
 function TitleDet()
     let n=1
-    "Ä¬ÈÏÎªÌí¼Ó
-    while n < 20 
+    "é»˜è®¤ä¸ºæ·»åŠ 
+    while n < 20
         let line = getline(n)
         if line =~ '^\#\s*\S*last\smodified:\S*.*$'
             call UpdateTitle()
@@ -186,25 +172,21 @@ function TitleDet()
     call SetTitle()
 endfunction
 
-"quickfix set
-"set makeprg=g++\ -Wall\ -o\ hello\ hello.cpp
-
 "set the compliation
-
-"! <command>±íÊ¾Ö´ĞĞcmdÃüÁî
-"!start <command>±íÊ¾Òì²½Ö´ĞĞcmdÃüÁî
-"ÏÂÃæ±àÒëÃüÁîÖĞµÄ%±íÊ¾µ±Ç°ÎÄ¼şµÄÍêÕûÃû×Ö(ÎÄ¼şÃû+ÀàĞÍÃû)
-"ÏÂÃæ±àÒëÃüÁîÖĞµÄ%<±íÊ¾µ±Ç°ÎÄ¼şÃû
+"! <command>è¡¨ç¤ºæ‰§è¡Œcmdå‘½ä»¤
+"!start <command>è¡¨ç¤ºå¼‚æ­¥æ‰§è¡Œcmdå‘½ä»¤:
+"ä¸‹é¢ç¼–è¯‘å‘½ä»¤ä¸­çš„%è¡¨ç¤ºå½“å‰æ–‡ä»¶çš„å®Œæ•´åå­—(æ–‡ä»¶å+ç±»å‹å)
+"ä¸‹é¢ç¼–è¯‘å‘½ä»¤ä¸­çš„%<è¡¨ç¤ºå½“å‰æ–‡ä»¶å
 map <F9> :call CR()<CR>
 func! CR()
 exec "w"
 if &filetype == "cpp"
 	exec "! g++ -Wall -O2 -g  % -o %<"
-	exec "! %<"
+	exec "! ./%<"
 
 elseif &filetype == "c"
-	exec "! g++ -Wall -O2 -g  % -o %<"
-	exec "! %<"
+	exec "! vig++ -Wall -O2 -g  % -o %<"
+	exec "! ./%<"
 
 elseif &filetype == "java"
 	exec "!javac %"
@@ -217,17 +199,13 @@ elseif &filetype == "html"
 	exec "! %"
 endif
 endfunc
- 
+
+"å¤§æ‹¬å·è‡ªåŠ¨ç”Ÿæˆ
 imap { {<cr>}<c-o>O<left><right>
 
-"------¸´ÖÆºÍÕ³Ìù------
+"------å¤åˆ¶å’Œç²˜è´´------
 map <C-A> ggVG
 map <C-C> "+y
 map <C-V> "+gp
 map <F3> :Ve!<CR>
 map <F4> :e.<CR>
-"inoremap ( ()<LEFT>
-"inoremap [ []<LEFT>
-"inoremap { {}<LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
