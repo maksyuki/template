@@ -1,0 +1,318 @@
+\documentclass{ctexart}
+
+\usepackage{CJKfntef}%提供对汉字进行标记的功能的宏包，比如在汉字上面添加下划线、下波浪线和删除线等
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{slashbox}
+\usepackage{amsmath}
+\usepackage{setspace}%使用间距宏包
+
+\DeclareGraphicsExtensions{.eps,.ps,.jpg,.bmp}
+\newfontfamily\menlo{Monaco}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+    numbers = left,
+    language = python,
+    %numberstyle = \tiny,
+    numberstyle=\menlo,
+    basicstyle = \footnotesize\menlo,
+    showspaces = false, % 显示空格
+    showstringspaces = false,  % 字符串中显示空格
+    breaklines = true,                 % automatic line breaking only at whitespace
+    frame = single,
+    keywordstyle = \color{blue},
+    commentstyle=\color{mygreen},    % comment style
+    stringstyle=\color{mymauve},     % string literal style
+    rulesepcolor = \color{ red!20!green!20!blue!20},
+    %commentstyle = \color{red!50!green!50!blue!50},
+    escapeinside={\%*}{*)}          % if you want to add LaTeX within your code
+}
+
+\title{\bf 防空导弹主级燃料相对质量因数计算}
+\author{班号：02021302 学号：2013300052 姓名：缪宇驰}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\clearpage
+\section{设计要求}
+1.根据已知条件，采用数值积分法求解相对量运动微分方程组，计算燃料相对质量因数。
+
+2.综合运用积分、插值计算等计算方法，采用C、C++，或者Matlab等语言的一种，编制计算程序。
+
+%\subsection{平时训练}
+%\subsection{暑假集训}
+%\subsection{区域赛}
+
+\section{已知条件}
+1.分离条件：速度$V_0$=500m/s，时间$t_0$=3s，x方向位置$x_0$=674m，y方向位置$y_0$=329m，初始攻角$\alpha$=$1.5^{\circ}$，初始弹道倾角$\theta$=$26^{\circ}$。
+~\\
+
+2.气动参数
+
+阻力因数$C_x(Ma,\alpha)$ 插值表：
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\backslashbox[2cm]{Ma}{$\alpha$} & 2 & 4 & 6 & 8 & 10\\
+\hline
+1.5 & 0.0430 & 0.0511 & 0.0651 & 0.0847 & 0.1120\\
+\hline
+2.1 & 0.0360 & 0.0436 & 0.0558 & 0.0736 & 0.0973\\
+\hline
+2.7 & 0.0308 & 0.0372 & 0.0481 & 0.0641 & 0.0849\\
+\hline
+3.3 & 0.0265 & 0.0323 & 0.0419 & 0.0560 & 0.0746\\
+\hline
+4.0 & 0.0222 & 0.0272 & 0.0356 & 0.0478 & 0.0644\\
+\hline
+\end{tabular}
+
+~\\
+
+升力因数斜率$C^{\alpha}_y(Ma,\alpha)$ 插值表：
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\backslashbox[2cm]{Ma}{$\alpha$} & 1 & 2 & 4 & 6 & 8 & 10\\
+\hline
+1.5 & 0.0302 & 0.0304 & 0.0306 & 0.0309 & 0.0311 & 0.0313\\
+\hline
+2.0 & 0.0279 & 0.0280 & 0.0284 & 0.0286 & 0.0288 & 0.0290\\
+\hline
+2.5 & 0.0261 & 0.0264 & 0.0267 & 0.0269 & 0.0272 & 0.0274\\
+\hline
+3.0 & 0.0247 & 0.0248 & 0.0251 & 0.0254 & 0.0257 & 0.0259\\
+\hline
+3.5 & 0.0226 & 0.0227 & 0.0231 & 0.0233 & 0.0236 & 0.0238\\
+\hline
+4.0 & 0.0209 & 0.0210 & 0.0213 & 0.0216 & 0.0219 & 0.0221\\
+\hline
+\end{tabular}
+
+注：以上攻角$\alpha$单位均为度
+~\\
+
+3.发动机参数：比冲Is=2156N$\cdot$s/kg；重力加速度g=9.801m/$s^2$；推重比$\overline{P}$=2.2；翼载$p_0$=5880N/$m^2$。
+
+4.导引规律：三点法。目标匀速直线等高迎头飞行，$V_T$=420m/s，$y_T$=15000m，$D_{T0}$=34200m（弹目斜距）。
+
+5.大气模型：参见教科书。
+
+\section{题目求解}
+题目限定导引律是三点法，所以先给出三点法导引时相对量运动微分方程组(当$\alpha$不为常数时)：
+
+\begin{align}
+\dfrac{dv}{d\mu} &= \dfrac{I_s}{1-\mu} - \dfrac{{\rho}v^2C_xI_s}{2\overline{P}p_0(1-\mu)} - \dfrac{I_ssin\theta}{\overline{P}} \\
+\dfrac{d\theta}{d\mu} &= \dfrac{\dfrac{v_T}{y_T}[\dfrac{I_s}{\overline{P}g} + \dfrac{1}{v^2sin\theta}(v\dfrac{dy}{d\mu}-y\dfrac{dv}{d\mu})]}{1+({\cot}q_0-\dfrac{{\mu}I_sv_T}{\overline{P}gy_T})\cot\theta} \\
+\dfrac{dy}{d\mu} &= \dfrac{I_s}{\overline{P}g}vsin\theta \\
+\dfrac{dx}{d\mu} &= \dfrac{I_s}{\overline{P}g}vcos\theta \\
+\alpha &= \dfrac{v\dfrac{d\theta}{d\mu}+\dfrac{I_scos\theta}{\overline{P}}}{\dfrac{{\rho}v^2C^{\alpha}_{yTR}I_s}{2\overline{P}p_0(1-\mu)}+\dfrac{I_s}{1-\mu}} \\
+\mu &= \dfrac{\overline{P}gy_T}{I_sv_T}(cotq_0-cotq) \\
+D_r &= \sqrt{x^2+y^2} \\
+Ma &= \dfrac{v}{c}
+\end{align}
+
+这里使用四阶Runge-Kutta法来求解上面的相对量微分方程，Runge-Kutta法计算公式为：
+
+\begin{equation}
+\left\{
+\begin{aligned}
+K_1 &= f(x_n,y_n) \\
+K_2 &= f(x_n+\frac{h}{2},y_n+\frac{h}{2}K_1) \\
+K_3 &= f(x_n+\frac{h}{2},y_n+\frac{h}{2}K_2) \\
+K_4 &= f(x_n+h,y_n+hK_3) \\
+y_{n+1} &= y_n + \frac{h}{6}(K_1+2K_2+2K_3+K_4)
+\end{aligned}
+\right.
+\end{equation}
+
+
+先初始化与导弹和发动机相关的参数，比如速度、位置、攻角、弹道倾角、比冲、翼载等。然后取步长h=0.001进行计算，使用龙格库塔法先求解公式(1)，得到$v_{n+1}$的值，然后将求解出的$v_{n+1}$代入到公式(3)、(4)中解出$y_{n+1}$和$x_{n+1}$。接着使用龙格库塔法求解公式(2)，其中将公式中的$dy$/$d\mu$和$dv$/$d\mu$由公式(3)和公式(1)的结果代换，得到$\theta_{n+1}$。然后将$d\theta$/$d\mu$和计算出来的其他值代入到公式(5)中求解出$\alpha_{n+1}$，而$\mu_{n+1}$=$\mu_n$+h。迭代上述步骤直到导弹的高度$y_n$大于目标的高度$y_t$。\textbf{注意计算出来的马赫数$Ma$和攻角$\alpha$要作为参数进行二维插值得到当前飞行状态的阻力因数$C_{xn}$和升力因数斜率$C^{\alpha}_{yn}$，飞行开始阶段的攻角和马赫数不在插值表中，此时需要使用外插法设定当前参数，其他情况使用内插法。}而当前飞行高度的密度$\rho$和音速$c$需要对大气模型进行一维插值得到。这里使用美国标准大气模型(1976 Standard Atmosphere Calculator[0-1000 km])作为数据来源，考虑求解问题的特殊性，编程时只用高度为0-26km，步长为1km 的大气密度和音速数据。\textbf{最后计算得到导弹主级燃料相对质量因数$\mu=0.333$。击中目标时的导弹攻角$\alpha=5.331^{\circ}$}
+
+\clearpage
+
+\section{程序代码}
+使用python库numpy存储数据，数值计算库scipy进行插值
+\begin{lstlisting}
+#!/usr/bin/python
+#filename       :main.py
+#author         :Yuchi Miao
+#created time	:2016/4/18 19:44:10
+#last modified  :2016/4/19 15:58:10
+#python_version	:2.7.6
+#version        :1.0
+#description	:use the numerical integration method(Runge_Kutta Method) to
+#                solve the first order differential equation of continuous
+#                system
+#notes          :need to set the value in numerical extrapolate manually
+#===========================================================================
+
+import math
+import numpy as np
+import scipy.interpolate as itp
+import matplotlib.pyplot as plt
+
+v0 = 500
+x0 = 674
+y0 = 329
+alpha0_ang = 1.5
+theta0_ang = 26
+Is = 2156
+g = 9.801
+P = 2.2
+p0 = 5880
+#t0 = 3
+
+#======Machine Parameter======
+vt = 420
+yt0 = 15000
+Dt0 = 34200
+xt0 = math.sqrt(Dt0 ** 2 - (yt0 - y0) ** 2) + x0;
+
+#=======Drag Coefficient======
+alpha_tab1 = np.linspace(2, 10, 5, endpoint=True)
+ma_tab1 = np.array([1.5, 2.1, 2.7, 3.3, 4.0])
+cx_tab = np.array([[0.0430, 0.0511, 0.0651, 0.0847, 0.1120],
+                   [0.0360, 0.0436, 0.0558, 0.0736, 0.0973],
+                   [0.0308, 0.0372, 0.0481, 0.0641, 0.0849],
+                   [0.0265, 0.0323, 0.0419, 0.0560, 0.0746],
+                   [0.0222, 0.0272, 0.0356, 0.0478, 0.0644]])
+
+#======Lift Coefficient======
+alpha_tab2 = np.array([1, 2, 4, 6, 8, 10])
+ma_tab2 = np.linspace(1.5, 4.0, 6, endpoint=True)
+cy_tab = np.array([[0.0302, 0.0304, 0.0306, 0.0309, 0.0311, 0.0313],
+                   [0.0279, 0.0280, 0.0284, 0.0286, 0.0288, 0.0290],
+                   [0.0261, 0.0264, 0.0267, 0.0269, 0.0272, 0.0274],
+                   [0.0247, 0.0248, 0.0251, 0.0254, 0.0257, 0.0259],
+                   [0.0226, 0.0227, 0.0231, 0.0233, 0.0236, 0.0238],
+                   [0.0209, 0.0210, 0.0213, 0.0216, 0.0219, 0.0221]])
+
+
+#======Atmospheric Model(US1976)===
+high_tab = np.linspace(0, 26000, 27, endpoint=True)
+rho_tab = np.loadtxt("rho.txt")
+speed_tab = np.loadtxt("speed.txt")
+
+u = np.zeros(666, np.float)
+v = np.zeros(666, np.float)
+x = np.zeros(666, np.float)
+y = np.zeros(666, np.float)
+alpha_ang = np.zeros(666, np.float)
+alpha_rad = np.zeros(666, np.float)
+theta_ang = np.zeros(666, np.float)
+theta_rad = np.zeros(666, np.float)
+cx = np.zeros(666, np.float)
+cy = np.zeros(666, np.float)
+#xt = np.zeros(666, np.float)
+i = 1
+u[i] = 0
+#xt[i] = xt0
+x[i] = x0
+y[i] = y0
+v[i] = v0
+cotq0 = xt0 / yt0
+
+c = itp.interp1d(high_tab, speed_tab)(y[i])
+ma = v[i] / c
+alpha_ang[i] = alpha0_ang
+alpha_rad[i] = alpha_ang[i] / 180.0 * math.pi
+theta_ang[i] = theta0_ang
+theta_rad[i] = theta_ang[i] / 180.0 * math.pi
+
+def speed_func(u, v, p, cx, Is, p0, P, theta_rad):
+	return (Is * 1.0 / (1 - u) - p * (v ** 2) * cx
+                * Is * 1.0 / (2 * P * p0 * (1 - u))
+                - Is * math.sin(theta_rad) / P)
+
+
+def high_func(Is, v, theta_rad, P, g):
+	return Is * v * math.sin(theta_rad) / (P * g)
+
+
+def dis_func(Is, v, theta_rad, P, g):
+	return Is * v * math.cos(theta_rad) / (P * g)
+	
+
+def numerator_func(Is, P, g, v, theta_rad, y, kv1, kv2, kv3, kv4):
+	return (Is * 1.0 / (P * g) + (v * high_func(Is, v, theta_rad, P, g)
+                - y * (kv1 + 2 * kv2 + 2 * kv3 + kv4) / 6.0) / ((v ** 2)
+                * math.sin(theta_rad)))
+
+
+def arc_func(u, theta_rad, Is, cotq0, v, vt, y, P, g, yt0, kv1, kv2, kv3, kv4):
+	return ((vt * 1.0 / yt0) * numerator_func(Is, P, g, v, theta_rad, y
+                 , kv1, kv2, kv3, kv4)) / (1 + (cotq0 - (u * Is * vt) / (P
+                 * g * yt0)) * (1.0 / math.tan(theta_rad)))
+
+
+def alpha_func(v, Is, theta_rad, P, p, cya, p0, u, kvv1, kvv2, kvv3, kvv4):
+	return ((v * (kvv1 + 2 * kvv2 + 2 * kvv3 + kvv4) / 6.0 + Is
+                 * math.cos(theta_rad) / P) / ((p * (v ** 2) * cya * Is)
+                 / (2 * P * p0 * (1 - u)) + Is / (1 - u)))
+
+h = 1e-3  #set the step size
+EPS = 1e-10
+while(y[i] < yt0):
+	p = itp.interp1d(high_tab, rho_tab)(y[i])
+	c = itp.interp1d(high_tab, speed_tab)(y[i])
+	if(alpha_ang[i] + EPS < alpha_tab1[0] or ma + EPS < ma_tab1[0]):
+		cx[i] = 0.025
+	else:
+		cx[i] = (itp.interp2d(alpha_tab1, ma_tab1, cx_tab, kind="linear")
+                    (alpha_ang[i], ma))
+	cy[i] = (180.0 / math.pi * itp.interp2d(alpha_tab2, ma_tab2, cy_tab
+                 , kind="linear")
+                (alpha_ang[i], ma))
+	ma = v[i] / c
+
+	kv1 = speed_func(u[i], v[i], p, cx[i], Is, p0, P, theta_rad[i])
+	kv2 = speed_func(u[i] + h / 2.0, v[i] + h / 2.0 * kv1, p, cx[i]
+                         , Is, p0, P, theta_rad[i])
+	kv3 = speed_func(u[i] + h / 2.0, v[i] + h / 2.0 * kv2, p, cx[i]
+                         , Is, p0, P, theta_rad[i])
+	kv4 = speed_func(u[i] + h, v[i] + h * kv3, p, cx[i], Is, p0, P
+                         , theta_rad[i])
+
+	v[i+1] = v[i] + h / 6.0 * (kv1 + 2 * kv2 + 2 * kv3 + kv4)
+	y[i+1] = y[i] + high_func(Is, v[i], theta_rad[i], P, g) * h
+	x[i+1] = x[i] + dis_func(Is, v[i], theta_rad[i], P, g) * h
+	
+	kvv1 = arc_func(u[i], theta_rad[i], Is, cotq0, v[i], vt, y[i]
+                        , P, g, yt0, kv1, kv2, kv3, kv4)
+	kvv2 = arc_func(u[i] + h / 2.0, theta_rad[i] + h / 2.0 * kvv1
+                        , Is, cotq0, v[i], vt, y[i], P, g, yt0, kv1
+                        , kv2, kv3, kv4)
+	kvv3 = arc_func(u[i] + h / 2.0, theta_rad[i] + h / 2.0 * kvv2
+                        , Is, cotq0, v[i], vt, y[i], P, g, yt0, kv1
+                        , kv2, kv3, kv4)
+	kvv4 = arc_func(u[i] + h, theta_rad[i] + h * kvv3, Is, cotq0
+                        , v[i], vt, y[i], P, g, yt0, kv1, kv2, kv3
+                        , kv4)
+
+	theta_rad[i+1] = theta_rad[i] + h / 6.0 * (kvv1 + 2 * kvv2
+                         + 2 * kvv3 + kvv4)
+	theta_ang[i+1] = theta_rad[i+1] * 180.0 / math.pi
+	alpha_rad[i] = alpha_func(v[i], Is, theta_rad[i], P, p, cy[i]
+                                  , p0, u[i], kvv1, kvv2, kvv3, kvv4)	
+	alpha_ang[i+1] = alpha_rad[i] * 180.0 / math.pi
+	u[i+1] = u[i] + h
+#       cotq = cotq0 - u[i] * Is * vt / (P * g * yt0)
+#       xt[i+1] = cotq * yt0
+	i = i + 1
+print(i)
+print(u[i])
+print(alpha_ang[i])
+
+
+\end{lstlisting}
+
+\end{document}
