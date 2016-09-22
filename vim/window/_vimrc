@@ -22,51 +22,52 @@ set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\[POS=%l,%v][%p%%]\ %{strft
 "Set Color Scheme and Font Options
 colorscheme monokai
 "colorscheme solarized
-syntax on 					"语法高亮
+syntax on                   "语法高亮
 syntax enable
 set guifont=Consolas:h13
 "set gfw=幼圆:h10.5:cGB2312
 "set guifont=Monospace\ 11
 "set line no, buffer, search, highlight, autoindent and more.
-set nu              		"显示行号
-set go= 			 		"不显示工具栏
+set nu                      "显示行号
+set go=                     "不显示工具栏
 "set lines=50 columns=160
 set ai!
 set hidden
 set cursorline
 set nobackup
-set ignorecase 				"查找时忽略大小写
-set incsearch 				"设置快速搜索(输入待查找内容的同时，就开始匹配内容)
+set ignorecase              "查找时忽略大小写
+set incsearch               "设置快速搜索(输入待查找内容的同时，就开始匹配内容)
 
 "------缩进------
 "在这种缩进形式中，新增加的行和前一行使用相同的缩进形式。可以使用以下命令，启用autoindent缩进形式
 set autoindent
 
 "在这种缩进模式中，每一行都和前一行有相同的缩进量，同时这种缩进形式能正确的识别出花括号，当遇到右花括号（}），则取消缩进形式。此外还增加了识别C语言关键字的功能。如果一行是以#开头的，那么这种格式将会被特殊对待而不采用缩进格式。可以使用以下命令，启用smartindent缩进结构
-set smartindent 			"智能的选择对起方式
+set smartindent             "智能的选择对起方式
 
 "Vim可以很好的识别出C和Java等结构化程序设计语言，并且能用C语言的缩进格式来处理程序的缩进结构。可以使用以下命令，启用cindent缩进结构
 set cindent shiftwidth=4
 
 "set smarttab "
-set tabstop=4 				"设置tab键为4个空格
-set shiftwidth=4 			"将换行自动缩进设置成4个空格
+set expandtab               "用space替代tab的输入
+set tabstop=4               "设置tab键为4个空格
+set shiftwidth=4            "将换行自动缩进设置成4个空格
 set backspace=2
 "if &filetype == "python"
 "    set expandtab
 "endif
-"set expandtab 				"插入tab之后会将tab变成4个空格(按backspace会察觉)
+"set expandtab              "插入tab之后会将tab变成4个空格(按backspace会察觉)
 "imap { {}<ESC>i<CR><ESC>V<O
 
 set smartcase
-set showmatch 				"括号匹配
-set ruler 					"右下角显示光标状态行
+set showmatch               "括号匹配
+set ruler                   "右下角显示光标状态行
 set vb
 set viminfo+=n$VIM/_viminfo
 set noerrorbells
-set showcmd					"在底部显示输入的命令
-set mouse=a 				"使用鼠标
-set history=1000 			"命令或者是查找记录的历史个数
+set showcmd                 "在底部显示输入的命令
+set mouse=a                 "使用鼠标
+set history=1000            "命令或者是查找记录的历史个数
 set undolevels=1000
 "set t_Co=256
 
@@ -78,7 +79,7 @@ if &filetype == "cpp"
     let l = 0
     let l = l + 1 | call setline(l,'/**************************************************')
     let l = l + 1 | call setline(l,'filename       :'.expand('%:t'))
-    let l = l + 1 | call setline(l,'author         :supermaker')
+    let l = l + 1 | call setline(l,'author         :maksyuki')
     let l = l + 1 | call setline(l,'created time   :'.strftime('%c'))
     let l = l + 1 | call setline(l,'last modified  :'.strftime('%c'))
     let l = l + 1 | call setline(l,'file location  :'.getcwd())
@@ -144,7 +145,7 @@ elseif &filetype == "python"
     let l = 0
     let l = l + 1 | call setline(l,'#!/usr/bin/python')
     let l = l + 1 | call setline(l,'#filename       :'.expand('%:t'))
-    let l = l + 1 | call setline(l,'#author         :Yuchi Miao')
+    let l = l + 1 | call setline(l,'#author         :Miao Yuchi')
     let l = l + 1 | call setline(l,'#created time   :'.strftime('%c'))
     let l = l + 1 | call setline(l,'#last modified  :'.strftime('%c'))
     let l = l + 1 | call setline(l,'#python_version :2.7.6')
@@ -158,6 +159,7 @@ endfunc
 
 autocmd BufWritePre,FileWritePre *.py ks|call UpdateTitle()|'s 
 autocmd BufWritePre,FileWritePre *.cpp ks|call UpdateTitle()|'s 
+
 "更新最近修改时间和文件名
 function UpdateTitle()
     normal m'
@@ -169,6 +171,7 @@ function UpdateTitle()
     normal 'k
     echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
 endfunction
+
 "判断前10行代码里面，是否有Last modified这个单词，
 "如果没有的话，代表没有添加过作者信息，需要新添加；
 "如果有的话，那么只需要更新即可
