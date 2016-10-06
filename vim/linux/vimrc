@@ -65,8 +65,8 @@ if &filetype == "cpp"
     let l = l + 1 | call setline(l,'/**************************************************')
     let l = l + 1 | call setline(l,'filename       :'.expand('%:t'))
     let l = l + 1 | call setline(l,'author         :maksyuki')
-    let l = l + 1 | call setline(l,'created time   :'.strftime('%c'))
-    let l = l + 1 | call setline(l,'last modified  :'.strftime('%c'))
+    let l = l + 1 | call setline(l,'created time   :'.strftime('%F %H:%M:%S'))
+    let l = l + 1 | call setline(l,'last modified  :'.strftime('%F %H:%M:%S'))
     let l = l + 1 | call setline(l,'file location  :'.getcwd())
     let l = l + 1 | call setline(l,'***************************************************/')
     let l = l + 1 | call setline(l,'')
@@ -131,8 +131,8 @@ elseif &filetype == "python"
     let l = l + 1 | call setline(l,'#!/usr/bin/python')
     let l = l + 1 | call setline(l,'#filename       :'.expand('%:t'))
     let l = l + 1 | call setline(l,'#author         :Miao Yuchi')
-    let l = l + 1 | call setline(l,'#created time   :'.strftime('%c'))
-    let l = l + 1 | call setline(l,'#last modified  :'.strftime('%c'))
+    let l = l + 1 | call setline(l,'#created time   :'.strftime('%F %H:%M:%S'))
+    let l = l + 1 | call setline(l,'#last modified  :'.strftime('%F %H:%M:%S'))
     let l = l + 1 | call setline(l,'#python_version :2.7.6')
     let l = l + 1 | call setline(l,'#version        :')
     let l = l + 1 | call setline(l,'#description    :')
@@ -148,7 +148,7 @@ autocmd BufWritePre,FileWritePre *.cpp ks|call UpdateTitle()|'s
 "更新最近修改时间和文件名
 function UpdateTitle()
     normal m'
-    execute '/last modified  :/s@:.*$@\=":".strftime("%c")@'
+    execute '/last modified  :/s@:.*$@\=":".strftime("%F %H:%M:%S")@'
     normal ''
     normal mk
     execute '/filename       :/s@:.*$@\=":".expand("%:t")@'
