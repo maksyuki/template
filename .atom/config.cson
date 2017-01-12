@@ -1,0 +1,42 @@
+"*":
+  core:
+    disabledPackages: [
+      "vim-mode"
+    ]
+    themes: [
+      "one-dark-ui"
+      "monokai"
+    ]
+  editor:
+    atomicSoftTabs: false
+    fontSize: 15
+    invisibles: {}
+    showIndentGuide: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+    tabLength: 4
+  "exception-reporting":
+    userId: "f485571a-2d2c-76ac-8882-18d62348d652"
+  latex:
+    engine: "xelatex"
+  minimap: {}
+  welcome:
+    showOnStartup: false
+".beamer.latex.tex.text":
+  editor:
+    tabLength: 4
+".bibtex.text":
+  editor:
+    tabLength: 4
+".latex.log.text":
+  editor:
+    tabLength: 4
+".latex.memoir.tex.text":
+  editor:
+    tabLength: 4
+".latex.tex.text":
+  editor:
+    tabLength: 4
+".tex.text":
+  editor:
+    tabLength: 4
