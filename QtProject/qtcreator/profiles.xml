@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProfiles>
-<!-- Written by QtCreator 4.2.0, 2017-01-12T10:48:09. -->
+<!-- Written by QtCreator 4.2.0, 2017-01-13T15:48:40. -->
 <qtcreator>
  <data>
   <variable>Profile.0</variable>
   <valuemap type="QVariantMap">
-   <value type="bool" key="PE.Profile.AutoDetected">true</value>
+   <value type="bool" key="PE.Profile.AutoDetected">false</value>
    <value type="QString" key="PE.Profile.AutoDetectionSource"></value>
    <valuemap type="QVariantMap" key="PE.Profile.Data">
     <value type="QString" key="Android.GdbServer.Information"></value>
@@ -24,26 +24,22 @@
     <value type="QString" key="CMakeProjectManager.CMakeKitInformation">{a0e7d54c-d9e2-4cb5-a6c7-d5ee12b0350f}</value>
     <value type="QString" key="Debugger.Information">{82702f11-25a1-4a9f-bbf1-365a640c47cf}</value>
     <value type="QString" key="PE.Profile.Device">Desktop Device</value>
-    <value type="QString" key="PE.Profile.DeviceType">Desktop</value>
+    <value type="QByteArray" key="PE.Profile.DeviceType">Desktop</value>
     <valuelist type="QVariantList" key="PE.Profile.Environment"/>
     <value type="QString" key="PE.Profile.SysRoot"></value>
     <valuemap type="QVariantMap" key="PE.Profile.ToolChains">
-     <value type="QByteArray" key="C"></value>
+     <value type="QByteArray" key="C">{0e63970c-2337-4a1f-aba9-928a6bb40100}</value>
      <value type="QByteArray" key="Cxx">{c5cd2d24-c300-4e9e-98a8-f02a07c21089}</value>
     </valuemap>
     <value type="QString" key="QtPM4.mkSpecInformation"></value>
-    <value type="QString" key="QtSupport.QtInformation">SDK.qt.57.gcc_64</value>
+    <value type="int" key="QtSupport.QtInformation">-1</value>
    </valuemap>
-   <value type="QString" key="PE.Profile.Icon">:///DESKTOP///</value>
-   <value type="QString" key="PE.Profile.Id">qt.57.gcc_64_kit</value>
+   <value type="QString" key="PE.Profile.Icon"></value>
+   <value type="QString" key="PE.Profile.Id">{de0e4603-a08f-4f8f-b702-f5e4941c297c}</value>
    <valuelist type="QVariantList" key="PE.Profile.MutableInfo"/>
-   <value type="QString" key="PE.Profile.Name">Desktop Qt %{Qt:Version} GCC 64bit</value>
-   <value type="bool" key="PE.Profile.SDK">true</value>
-   <valuelist type="QVariantList" key="PE.Profile.StickyInfo">
-    <value type="QString">QtSupport.QtInformation</value>
-    <value type="QString">PE.Profile.ToolChains</value>
-    <value type="QString">PE.Profile.DeviceType</value>
-   </valuelist>
+   <value type="QString" key="PE.Profile.Name">Desktop</value>
+   <value type="bool" key="PE.Profile.SDK">false</value>
+   <valuelist type="QVariantList" key="PE.Profile.StickyInfo"/>
   </valuemap>
  </data>
  <data>
@@ -52,7 +48,7 @@
  </data>
  <data>
   <variable>Profile.Default</variable>
-  <value type="QString">qt.57.gcc_64_kit</value>
+  <value type="QString">{de0e4603-a08f-4f8f-b702-f5e4941c297c}</value>
  </data>
  <data>
   <variable>Version</variable>

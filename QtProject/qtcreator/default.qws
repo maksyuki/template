@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorSession>
-<!-- Written by QtCreator 4.2.0, 2017-01-12T10:48:09. -->
+<!-- Written by QtCreator 4.2.0, 2017-01-13T15:48:40. -->
 <qtcreator>
  <data>
   <variable>CascadeSetActive</variable>
@@ -12,7 +12,7 @@
  </data>
  <data>
   <variable>EditorSettings</variable>
-  <value type="QByteArray">AAAAD0VkaXRvck1hbmFnZXJWNAAAAAEAAABEAC8AaABvAG0AZQAvAG0AYQBrAHMAeQB1AGsAaQAvAEQAZQBzAGsAdABvAHAALwBxAHQALwBtAGEAaQBuAC4AYwBwAHAAAAAMAAAAABgAAAABAAAAAAAAAAAAAAAIAAAADQAAAAAAAAABAAAARAAvAGgAbwBtAGUALwBtAGEAawBzAHkAdQBrAGkALwBEAGUAcwBrAHQAbwBwAC8AcQB0AC8AbQBhAGkAbgAuAGMAcABwAAAAEABtAGEAaQBuAC4AYwBwAHAAAAATQ3BwRWRpdG9yLkMrK0VkaXRvcgAAAJ8AAAANY3VycmVudGVkaXRvcgAAAEQALwBoAG8AbQBlAC8AbQBhAGsAcwB5AHUAawBpAC8ARABlAHMAawB0AG8AcAAvAHEAdAAvAG0AYQBpAG4ALgBjAHAAcAAAACYAQwBwAHAARQBkAGkAdABvAHIALgBDACsAKwBFAGQAaQB0AG8AcgAAABgAAAABAAAAAAAAAAAAAAAIAAAADQAAAAA=</value>
+  <value type="QByteArray">AAAAD0VkaXRvck1hbmFnZXJWNAAAAAIAAABmAC8AaABvAG0AZQAvAG0AYQBrAHMAeQB1AGsAaQAvAEQAZQBzAGsAdABvAHAALwBvAHAAZQBuAGMAdgAtAGwAZQBuAGEALwBEAGkAcwBwAGwAYQB5AEkAbQBhAGcAZQAuAGMAcABwAAAADAAAAAAYAAAAAQAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAYgAvAGgAbwBtAGUALwBtAGEAawBzAHkAdQBrAGkALwBEAGUAcwBrAHQAbwBwAC8AbwBwAGUAbgBjAHYALQBsAGUAbgBhAC8AQwBNAGEAawBlAEwAaQBzAHQAcwAuAHQAeAB0AAAADAAAAAAYAAAAAQAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAQAAAGYALwBoAG8AbQBlAC8AbQBhAGsAcwB5AHUAawBpAC8ARABlAHMAawB0AG8AcAAvAG8AcABlAG4AYwB2AC0AbABlAG4AYQAvAEQAaQBzAHAAbABhAHkASQBtAGEAZwBlAC4AYwBwAHAAAAAgAEQAaQBzAHAAbABhAHkASQBtAGEAZwBlAC4AYwBwAHAAAAATQ3BwRWRpdG9yLkMrK0VkaXRvcgAAAMEAAAANY3VycmVudGVkaXRvcgAAAGYALwBoAG8AbQBlAC8AbQBhAGsAcwB5AHUAawBpAC8ARABlAHMAawB0AG8AcAAvAG8AcABlAG4AYwB2AC0AbABlAG4AYQAvAEQAaQBzAHAAbABhAHkASQBtAGEAZwBlAC4AYwBwAHAAAAAmAEMAcABwAEUAZABpAHQAbwByAC4AQwArACsARQBkAGkAdABvAHIAAAAYAAAAAQAAAAAAAAAAAAAAAQAAAAQAAAAA</value>
  </data>
  <data>
   <variable>ProjectDependencies</variable>
@@ -21,12 +21,12 @@
  <data>
   <variable>ProjectList</variable>
   <valuelist type="QVariantList">
-   <value type="QString">/home/maksyuki/Desktop/qt/qt.pro</value>
+   <value type="QString">/home/maksyuki/Desktop/opencv-lena/CMakeLists.txt</value>
   </valuelist>
  </data>
  <data>
   <variable>StartupProject</variable>
-  <value type="QString">/home/maksyuki/Desktop/qt/qt.pro</value>
+  <value type="QString">/home/maksyuki/Desktop/opencv-lena/CMakeLists.txt</value>
  </data>
  <data>
   <variable>value-ActiveMode</variable>
@@ -52,12 +52,8 @@
     <value type="QString">session</value>
    </valuelist>
    <valuelist type="QVariantList">
-    <value type="QString">/home/maksyuki/Desktop/qt/qt.pro</value>
-    <value type="QString">qt</value>
-   </valuelist>
-   <valuelist type="QVariantList">
-    <value type="QString">/home/maksyuki/Desktop/qt</value>
-    <value type="QString">Sources</value>
+    <value type="QString">/home/maksyuki/Desktop/opencv-lena</value>
+    <value type="QString">DisplayImage</value>
    </valuelist>
   </valuelist>
  </data>
