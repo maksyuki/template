@@ -9,9 +9,9 @@ echo "The target path is $gitpath_vim_linux"
 echo "..."
 
 if [[ ! -x $gitpath ]]; then
-    echo "no such path or the path is permission denied "; exit 1
+    echo "no such path or the path is permission denied"; exit 1
 elif [[ ! -x $gitpath_vim_linux ]]; then
-    echo "no such path or the path is permission denied "; exit 1
+    echo "no such path or the path is permission denied"; exit 1
 fi
 
 if ! cp -Rf ~/.atom $gitpath; then
