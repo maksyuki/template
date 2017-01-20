@@ -1,8 +1,5 @@
 "*":
   core:
-    disabledPackages: [
-      "vim-mode"
-    ]
     themes: [
       "one-dark-ui"
       "monokai"

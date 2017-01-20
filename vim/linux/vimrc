@@ -208,6 +208,6 @@ imap { {<cr>}<c-o>O<left><right>
 "------复制和粘贴------
 map <C-A> ggVG
 map <C-C> "+y
-map <C-V> "+gp
+"map <C-V> "+gp   linux can not support this
 map <F3> :Ve!<CR>
 map <F4> :e.<CR>

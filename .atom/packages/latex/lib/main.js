@@ -1,16 +1,22 @@
 /** @babel */
 
-import { CompositeDisposable } from 'atom'
+import { CompositeDisposable, Disposable } from 'atom'
 
 export default {
   activate () {
-    this.bootstrap()
     this.disposables = new CompositeDisposable()
+    this.bootstrap()
 
     this.disposables.add(atom.commands.add('atom-workspace', {
-      'latex:build': () => this.composer.build(),
-      'latex:clean': () => this.composer.clean(),
-      'latex:sync': () => this.composer.sync()
+      'latex:build': () => latex.composer.build(false),
+      'latex:rebuild': () => latex.composer.build(true),
+      'latex:check-runtime': () => this.checkRuntime(),
+      'latex:clean': () => latex.composer.clean(),
+      'latex:sync': () => latex.composer.sync(),
+      'latex:kill': () => latex.process.killChildProcesses(),
+      'latex:sync-log': () => latex.log.sync(),
+      'core:close': () => this.handleHideLogPanel(),
+      'core:cancel': () => this.handleHideLogPanel()
     }))
 
     this.disposables.add(atom.workspace.observeTextEditors(editor => {
@@ -18,10 +24,15 @@ export default {
         // Let's play it safe; only trigger builds for the active editor.
         const activeEditor = atom.workspace.getActiveTextEditor()
         if (editor === activeEditor && atom.config.get('latex.buildOnSave')) {
-          this.composer.build()
+          latex.composer.build()
         }
       }))
     }))
+
+    if (!atom.inSpecMode()) {
+      const checkConfigAndMigrate = require('./config-migrator')
+      checkConfigAndMigrate()
+    }
   },
 
   deactivate () {
@@ -30,28 +41,35 @@ export default {
       delete this.disposables
     }
 
-    if (this.composer) {
-      this.composer.destroy()
-      delete this.composer
-    }
+    delete global.latex
+  },
 
-    if (global.latex) {
-      delete global.latex
+  handleHideLogPanel () {
+    if (latex && latex.log) {
+      latex.log.hide()
     }
   },
 
   consumeStatusBar (statusBar) {
     this.bootstrap()
-    this.composer.setStatusBar(statusBar)
+    latex.status.attachStatusBar(statusBar)
+    return new Disposable(() => {
+      if (latex) latex.status.detachStatusBar()
+    })
   },
 
   bootstrap () {
-    if (this.composer && global.latex) { return }
+    if (global.latex) { return }
 
     const Latex = require('./latex')
-    const Composer = require('./composer')
-
     global.latex = new Latex()
-    this.composer = new Composer()
+    this.disposables.add(global.latex)
+  },
+
+  async checkRuntime () {
+    latex.log.group('LaTeX Check')
+    await latex.builderRegistry.checkRuntimeDependencies()
+    latex.opener.checkRuntimeDependencies()
+    latex.log.groupEnd()
   }
 }

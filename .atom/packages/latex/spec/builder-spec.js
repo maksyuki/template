@@ -3,15 +3,20 @@
 import helpers from './spec-helpers'
 import path from 'path'
 import Builder from '../lib/builder'
+import BuildState from '../lib/build-state'
 
 describe('Builder', () => {
-  let builder, fixturesPath, filePath, logFilePath
+  let builder, fixturesPath, filePath, logFilePath, fdbFilePath, state, jobState
 
   beforeEach(() => {
     builder = new Builder()
     fixturesPath = helpers.cloneFixtures()
     filePath = path.join(fixturesPath, 'file.tex')
     logFilePath = path.join(fixturesPath, 'file.log')
+    fdbFilePath = path.join(fixturesPath, 'file.fdb_latexmk')
+    state = new BuildState(filePath)
+    state.setOutputDirectory('')
+    jobState = state.getJobStates()[0]
   })
 
   describe('constructPath', () => {
@@ -80,37 +85,82 @@ describe('Builder', () => {
     it('resolves the associated log file path by invoking @resolveLogFilePath', () => {
       spyOn(builder, 'resolveLogFilePath').andReturn('foo.log')
 
-      builder.parseLogFile(filePath, null)
-      expect(builder.resolveLogFilePath).toHaveBeenCalledWith(filePath, null)
+      builder.parseLogFile(jobState)
+      expect(builder.resolveLogFilePath).toHaveBeenCalledWith(jobState)
     })
 
-    it('returns null if passed a file path that does not exist', () => {
-      filePath = '/foo/bar/quux.tex'
-      const result = builder.parseLogFile(filePath, null)
+    it('does not attempt parse if passed a file path that does not exist', () => {
+      state.setFilePath('/foo/bar/quux.tex')
+      builder.parseLogFile(jobState)
 
-      expect(result).toBeNull()
       expect(logParser.parse).not.toHaveBeenCalled()
     })
 
     it('attempts to parse the resolved log file', () => {
-      builder.parseLogFile(filePath)
+      builder.parseLogFile(jobState)
 
       expect(builder.getLogParser).toHaveBeenCalledWith(logFilePath, filePath)
       expect(logParser.parse).toHaveBeenCalled()
     })
   })
 
-  describe('getLatexEngineFromMagic', () => {
-    it('detects program magic and outputs correct engine', () => {
-      const filePath = path.join(fixturesPath, 'magic-comments', 'latex-engine.tex')
-      expect(builder.getLatexEngineFromMagic(filePath)).toEqual('pdflatex')
+  describe('parseFdbFile', () => {
+    let fdbParser
+
+    beforeEach(() => {
+      fdbParser = jasmine.createSpyObj('MockFdbParser', ['parse'])
+      spyOn(builder, 'getFdbParser').andReturn(fdbParser)
+    })
+
+    it('resolves the associated fdb file path by invoking @resolveFdbFilePath', () => {
+      spyOn(builder, 'resolveFdbFilePath').andReturn('foo.fdb_latexmk')
+
+      builder.parseFdbFile(jobState)
+      expect(builder.resolveFdbFilePath).toHaveBeenCalledWith(jobState)
+    })
+
+    it('does not attempt parse if passed a file path that does not exist', () => {
+      state.setFilePath('/foo/bar/quux.tex')
+      builder.parseFdbFile(jobState)
+
+      expect(fdbParser.parse).not.toHaveBeenCalled()
+    })
+
+    it('attempts to parse the resolved fdb file', () => {
+      builder.parseFdbFile(jobState)
+
+      expect(builder.getFdbParser).toHaveBeenCalledWith(fdbFilePath)
+      expect(fdbParser.parse).toHaveBeenCalled()
     })
   })
 
-  describe('getJobNamesFromMagic', () => {
-    it('detects program magic and outputs jobnames', () => {
-      const filePath = path.join(fixturesPath, 'magic-comments', 'latex-jobnames.tex')
-      expect(builder.getJobNamesFromMagic(filePath)).toEqual(['foo', 'bar'])
+  describe('parseLogAndFdbFiles', () => {
+    it('verifies that the correct output file is selected when using various latexmk modes', () => {
+      const switches = [{
+        name: 'pdf',
+        format: 'pdf'
+      }, {
+        name: 'pdfdvi',
+        format: 'pdf'
+      }, {
+        name: 'pdfps',
+        format: 'pdf'
+      }, {
+        name: 'ps',
+        format: 'ps'
+      }, {
+        name: 'dvi',
+        format: 'dvi'
+      }]
+      state.setOutputDirectory('log-parse')
+
+      for (const { name, format } of switches) {
+        state.setJobNames([`file-${name}`])
+        jobState = state.getJobStates()[0]
+        builder.parseLogAndFdbFiles(jobState)
+        expect(path.basename(jobState.getOutputFilePath())).toBe(`${jobState.getJobName()}.${format}`,
+          `Select ${format} file when using -${name} switch.`)
+      }
     })
   })
 })

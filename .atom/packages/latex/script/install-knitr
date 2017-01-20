@@ -9,7 +9,7 @@ shopt -s nocasematch
 ensure_r_installed() {
   if [[ "${APPVEYOR:-}" == true ]]; then
     echo "Installing R..."
-    choco install R.Project --ia="/DIR=\"${R_HOME}\""
+    choco install R.Project --allow-empty-checksums --ia="/DIR=\"${R_HOME}\""
 
     export PATH="${R_HOME}/bin:${PATH}"
   elif [[ "${TRAVIS_OS_NAME:-}" == "osx" ]]; then
@@ -29,7 +29,7 @@ install_knitr() {
     [[ ! -d "${R_LIBS_USER}" ]] && mkdir -p "${R_LIBS_USER}"
 
     echo "Installing knitr..."
-    Rscript -e "install.packages('knitr', repos = 'https://cran.r-project.org')"
+    Rscript -e "install.packages('knitr', repos = 'http://cran.r-project.org')"
   else
     echo "Using cached installation of knitr"
   fi

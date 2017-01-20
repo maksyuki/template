@@ -1,8 +1,12 @@
 /** @babel */
 
-import fs from 'fs-plus'
 import _ from 'lodash'
-import { heredoc } from './werkzeug'
+import Composer from './composer'
+import OpenerRegistry from './opener-registry'
+import ProcessManager from './process-manager'
+import StatusIndicator from './status-indicator'
+import BuilderRegistry from './builder-registry'
+import { CompositeDisposable, Disposable } from 'atom'
 
 function defineDefaultProperty (target, property) {
   const shadowProperty = `__${property}`
@@ -20,18 +24,29 @@ function defineDefaultProperty (target, property) {
   })
 }
 
-export default class Latex {
+function defineImmutableProperty (obj, name, value) {
+  if (Disposable.isDisposable(value)) {
+    obj.disposables.add(value)
+  }
+  Object.defineProperty(obj, name, { value })
+}
+
+export default class Latex extends Disposable {
+  disposables = new CompositeDisposable()
+
   constructor () {
+    super(() => this.disposables.dispose())
     this.createLogProxy()
-
     defineDefaultProperty(this, 'logger')
-    defineDefaultProperty(this, 'opener')
 
-    this.observeOpenerConfig()
+    defineImmutableProperty(this, 'builderRegistry', new BuilderRegistry())
+    defineImmutableProperty(this, 'composer', new Composer())
+    defineImmutableProperty(this, 'opener', new OpenerRegistry())
+    defineImmutableProperty(this, 'process', new ProcessManager())
+    defineImmutableProperty(this, 'status', new StatusIndicator())
   }
 
   getLogger () { return this.logger }
-  getOpener () { return this.opener }
 
   setLogger (logger) {
     this.logger = logger
@@ -42,31 +57,16 @@ export default class Latex {
     return new DefaultLogger()
   }
 
-  getDefaultOpener () {
-    const OpenerImpl = this.resolveOpenerImplementation(process.platform)
-    if (OpenerImpl) {
-      return new OpenerImpl()
-    }
-
-    if (this['__logger'] && this.log) {
-      this.log.warning(heredoc(`
-        No PDF opener found.
-        For cross-platform viewing, consider installing the pdf-view package.
-        `)
-      )
-    }
-  }
-
   createLogProxy () {
     this.log = {
-      error: (statusCode, result, builder) => {
-        this.logger.error(statusCode, result, builder)
+      error: (...args) => {
+        this.logger.error(...args)
       },
-      warning: (message) => {
-        this.logger.warning(message)
+      warning: (...args) => {
+        this.logger.warning(...args)
       },
-      info: (message) => {
-        this.logger.info(message)
+      info: (...args) => {
+        this.logger.info(...args)
       },
       showMessage: (message) => {
         this.logger.showMessage(message)
@@ -76,77 +76,19 @@ export default class Latex {
       },
       groupEnd: () => {
         this.logger.groupEnd()
+      },
+      sync: () => {
+        this.logger.sync()
+      },
+      toggle: () => {
+        this.logger.toggle()
+      },
+      show: () => {
+        this.logger.show()
+      },
+      hide: () => {
+        this.logger.hide()
       }
-
     }
-  }
-
-  observeOpenerConfig () {
-    const callback = () => { this['__opener'] = this.getDefaultOpener() }
-    atom.config.onDidChange('latex.alwaysOpenResultInAtom', callback)
-    atom.config.onDidChange('latex.skimPath', callback)
-    atom.config.onDidChange('latex.sumatraPath', callback)
-    atom.config.onDidChange('latex.okularPath', callback)
-  }
-
-  resolveOpenerImplementation (platform) {
-    if (this.hasPdfViewerPackage() && this.shouldOpenResultInAtom()) {
-      return require('./openers/atompdf-opener')
-    }
-
-    if (this.viewerExecutableExists()) {
-      return require('./openers/custom-opener')
-    }
-
-    switch (platform) {
-      case 'darwin':
-        if (this.skimExecutableExists()) {
-          return require('./openers/skim-opener')
-        }
-
-        return require('./openers/preview-opener')
-
-      case 'win32':
-        if (this.sumatraExecutableExists()) {
-          return require('./openers/sumatra-opener')
-        }
-
-        break
-
-      case 'linux':
-        if (this.okularExecutableExists()) {
-          return require('./openers/okular-opener')
-        }
-    }
-
-    if (this.hasPdfViewerPackage()) {
-      return require('./openers/atompdf-opener')
-    }
-
-    return null
-  }
-
-  hasPdfViewerPackage () {
-    return !!atom.packages.resolvePackagePath('pdf-view')
-  }
-
-  shouldOpenResultInAtom () {
-    return atom.config.get('latex.alwaysOpenResultInAtom')
-  }
-
-  skimExecutableExists () {
-    return fs.existsSync(atom.config.get('latex.skimPath'))
-  }
-
-  sumatraExecutableExists () {
-    return fs.existsSync(atom.config.get('latex.sumatraPath'))
-  }
-
-  okularExecutableExists () {
-    return fs.existsSync(atom.config.get('latex.okularPath'))
-  }
-
-  viewerExecutableExists () {
-    return fs.existsSync(atom.config.get('latex.viewerPath'))
   }
 }

@@ -1,17 +1,18 @@
 /** @babel */
 
+import fs from 'fs-plus'
 import Opener from '../opener'
-import childProcess from 'child_process'
+import { isPdfFile } from '../werkzeug'
 
 export default class CustomOpener extends Opener {
-  // Custom PDF viewer cannot support texPath and lineNumber
-  open (filePath, texPath, lineNumber, callback) {
+  // Custom PDF viewer does not support texPath and lineNumber.
+  async open (filePath, texPath, lineNumber) {
     const command = `"${atom.config.get('latex.viewerPath')}" "${filePath}"`
 
-    childProcess.exec(command, (error) => {
-      if (callback) {
-        callback((error) ? error.code : 0)
-      }
-    })
+    await latex.process.executeChildProcess(command, { showError: true })
+  }
+
+  canOpen (filePath) {
+    return isPdfFile(filePath) && fs.existsSync(atom.config.get('latex.viewerPath'))
   }
 }

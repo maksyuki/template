@@ -2,6 +2,103 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.42.0] / 2017-01-02
+### Added
+- Magic comment override of `cleanExtensions`, `enableSynctex`,
+  `enableShellEscape`, `enableExtendedBuildMode` and
+  `moveResultToSourceDirectory`.
+- Output directory and job name support in knitr SyncTeX patching.
+- Support for Zathura PDF/PS viewer.
+- Override of build settings via YAML formatted build setting file.
+
+### Changed
+- Use commas as delimiters in `jobnames` magic comment.
+
+### Removed
+- Deprecated `texify` builder in favor of `latexmk` builder.
+- Unneeded `builder` magic comment.
+- `Use Master File Search` setting and algorithm in favor of `root` magic comment.
+
+## [0.41.0] / 2016-11-17
+### Fixed
+- Parsing of FDB files is more rigorous resulting in correct output path
+  detection when using PDF producers.
+- Log status codes resulting from failure of `latexmk` or `knitr`.
+
+## [0.40.0] / 2016-11-09
+### Added
+- Added support for additional openers including Windows shell open and the
+  Evince forks Atril (MATE) and Xreader (Cinnamon).
+
+### Fixed
+- Allow usage of either relative and absolute output directories in
+  `latex:clean` and `latex:build`. Fixes
+  [#290](https://github.com/thomasjo/atom-latex/issues/290).
+
+## [0.39.1] / 2016-11-01
+### Fixed
+- Avoid potential package activation issues by moving runtime checks out of
+  package initialization into command `latex:check-runtime`.
+
+## [0.39.0] / 2016-10-30
+### Added
+- `latex.opener` setting to allow explicit selection of PDF/PS/DVI opener. The
+  support that each opener has for PDF/PS/DVI, SyncTeX, and open in background
+  is evaluated and used in the decision of which opener to use.
+- Check runtime environment at startup, including `latexmk`, `knitr` and
+  availability of PDF/PS/DVI viewers.
+- Extended build rules enabling automatic processing of generated files. Uses
+  `latexmk` custom rules to support Asymptote, the `glossaries` package,
+  MetaPost, the `nomencl` package, the `index` package and SageTeX.
+
+### Fixed
+- Support for spaces with SyncTeX and Evince. Fixes
+  [#279](https://github.com/thomasjo/atom-latex/issues/279).
+- Ignore extraneous error codes from SumatraPDF. Fixes
+  [#252](https://github.com/thomasjo/atom-latex/issues/252) and
+  [#282](https://github.com/thomasjo/atom-latex/issues/282).
+
+## [0.38.1] / 2016-10-17
+### Fixed
+- File path resolution for errors reported in log files.
+
+## [0.38.0] / 2016-10-16
+### Added
+- Command to terminate currently running or stuck build processes.
+- SyncTeX support for knitr files.  
+    ~ [#254](https://github.com/thomasjo/atom-latex/pull/254)
+    / [@harmsk](https://github.com/harmsk)
+- Support opening files in background with Okular.
+- Allow output directory override via magic comments.
+
+### Changed
+- Removed `cleanExtensions` setting and added `cleanPatterns` setting.
+  `latex:clean` command now supports file globbing and parsing of the `latexmk`
+  file name database.
+
+### Fixed
+- Clean and SyncTeX compatibility with `jobnames` magic comment. Fixes [#211](https://github.com/thomasjo/atom-latex/issues/211).
+- Security issues with output directory. Fixes [#104](https://github.com/thomasjo/atom-latex/issues/104).
+
+## [0.37.1] / 2016-10-07
+### Fixed
+- Output extension matching in log parser. Fixes [#245](https://github.com/thomasjo/atom-latex/issues/245).
+
+## [0.37.0] / 2016-10-05
+### Added
+- Deprecation notice for `texify`.
+- Evince viewer support including SyncTeX forward/backward and open in background.
+- `xdg-open` viewer support.
+- Non-PDF producing LaTeX engine support.
+- Allow PDF producer override via magic comments.
+- Allow output format override via magic comments.
+- Rebuild command including automatic rebuild on change in settings.
+- Message panel with synchronization to source and log files.
+
+## [0.36.1] / 2016-09-20
+### Fixed
+- Open LaTeX log from error indicator
+
 ## [0.36.0] / 2016-09-14
 ### Added
 - Allow builder override via magic comments.
@@ -461,6 +558,16 @@ minor release.
 - First release.
 
 <!--- refs --->
+[0.42.0]: https://github.com/thomasjo/atom-latex/compare/v0.41.0...v0.42.0
+[0.41.0]: https://github.com/thomasjo/atom-latex/compare/v0.40.0...v0.41.0
+[0.40.0]: https://github.com/thomasjo/atom-latex/compare/v0.39.1...v0.40.0
+[0.39.1]: https://github.com/thomasjo/atom-latex/compare/v0.39.0...v0.39.1
+[0.39.0]: https://github.com/thomasjo/atom-latex/compare/v0.38.1...v0.39.0
+[0.38.1]: https://github.com/thomasjo/atom-latex/compare/v0.38.0...v0.38.1
+[0.38.0]: https://github.com/thomasjo/atom-latex/compare/v0.37.1...v0.38.0
+[0.37.1]: https://github.com/thomasjo/atom-latex/compare/v0.37.0...v0.37.1
+[0.37.0]: https://github.com/thomasjo/atom-latex/compare/v0.36.1...v0.37.0
+[0.36.1]: https://github.com/thomasjo/atom-latex/compare/v0.36.0...v0.36.1
 [0.36.0]: https://github.com/thomasjo/atom-latex/compare/v0.35.1...v0.36.0
 [0.35.1]: https://github.com/thomasjo/atom-latex/compare/v0.35.0...v0.35.1
 [0.35.0]: https://github.com/thomasjo/atom-latex/compare/v0.34.1...v0.35.0

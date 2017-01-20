@@ -1,20 +1,20 @@
 /** @babel */
 
-import _ from 'lodash'
 import fs from 'fs-plus'
 import path from 'path'
 import LogParser from './parsers/log-parser'
-import MagicParser from './parsers/magic-parser'
-import { heredoc } from './werkzeug.js'
+import FdbParser from './parsers/fdb-parser'
+import { heredoc, isPdfFile, isPsFile, isDviFile } from './werkzeug.js'
 
 export default class Builder {
   envPathKey = this.getEnvironmentPathKey(process.platform)
 
-  static canProcess (/* filePath */) {}
-  run (/* filePath, jobname */) {}
-  constructArgs (/* filePath, jobname */) {}
+  static canProcess (state) {}
+  async run (jobState) {}
+  constructArgs (jobState) {}
+  async checkRuntimeDependencies () {}
 
-  logStatusCode (statusCode) {
+  logStatusCode (statusCode, stderr) {
     switch (statusCode) {
       case 127:
         latex.log.error(heredoc(`
@@ -29,33 +29,43 @@ export default class Builder {
       case 0:
         break
       default:
-        latex.log(`TeXification failed with status code ${statusCode}`)
+        const errorOutput = stderr ? ` and output of "${stderr}"` : ''
+        latex.log.error(`TeXification failed with status code ${statusCode}${errorOutput}`)
     }
   }
 
-  parseLogFile (texFilePath, jobname) {
-    const logFilePath = this.resolveLogFilePath(texFilePath, jobname)
-    if (!fs.existsSync(logFilePath)) { return null }
-
-    const parser = this.getLogParser(logFilePath, texFilePath)
-    return parser.parse()
+  parseLogFile (jobState) {
+    const logFilePath = this.resolveLogFilePath(jobState)
+    if (fs.existsSync(logFilePath)) {
+      const parser = this.getLogParser(logFilePath, jobState.getFilePath())
+      const result = parser.parse()
+      if (result) {
+        if (result.messages) {
+          jobState.setLogMessages(result.messages)
+        }
+        if (result.outputFilePath) {
+          jobState.setOutputFilePath(result.outputFilePath)
+        }
+      }
+    }
   }
 
   getLogParser (logFilePath, texFilePath) {
     return new LogParser(logFilePath, texFilePath)
   }
 
-  constructChildProcessOptions (filePath, defaultEnv) {
-    const env = _.assign(defaultEnv || {}, process.env)
+  constructChildProcessOptions (directoryPath, defaultEnv) {
+    const env = Object.assign(defaultEnv || {}, process.env)
     const childPath = this.constructPath()
     if (childPath) {
       env[this.envPathKey] = childPath
     }
 
     return {
+      allowKill: true,
       encoding: 'utf8',
       maxBuffer: 52428800, // Set process' max buffer size to 50 MB.
-      cwd: path.dirname(filePath), // Run process with sensible CWD.
+      cwd: directoryPath,  // Run process with sensible CWD.
       env
     }
   }
@@ -94,12 +104,17 @@ export default class Builder {
     ].join(':')
   }
 
-  resolveLogFilePath (texFilePath, jobname) {
-    const outputDirectory = atom.config.get('latex.outputDirectory') || ''
-    const currentDirectory = path.dirname(texFilePath)
-    const fileName = jobname ? `${jobname}.log` : path.basename(texFilePath).replace(/\.\w+$/, '.log')
+  resolveOutputFilePath (jobState, ext) {
+    let { dir, name } = path.parse(jobState.getFilePath())
+    if (jobState.getJobName()) {
+      name = jobState.getJobName()
+    }
+    dir = path.resolve(dir, jobState.getOutputDirectory())
+    return path.format({ dir, name, ext })
+  }
 
-    return path.join(currentDirectory, outputDirectory, fileName)
+  resolveLogFilePath (jobState) {
+    return this.resolveOutputFilePath(jobState, '.log')
   }
 
   getEnvironmentPathKey (platform) {
@@ -107,32 +122,52 @@ export default class Builder {
     return 'PATH'
   }
 
-  getOutputDirectory (filePath) {
-    let outdir = atom.config.get('latex.outputDirectory')
-    if (outdir) {
-      const dir = path.dirname(filePath)
-      outdir = path.join(dir, outdir)
-    }
-
-    return outdir
+  resolveFdbFilePath (jobState) {
+    return this.resolveOutputFilePath(jobState, '.fdb_latexmk')
   }
 
-  getLatexEngineFromMagic (filePath) {
-    const magic = new MagicParser(filePath).parse()
-    if (magic && magic.program) {
-      return magic.program
+  parseFdbFile (jobState) {
+    const fdbFilePath = this.resolveFdbFilePath(jobState)
+    if (fs.existsSync(fdbFilePath)) {
+      const parser = this.getFdbParser(fdbFilePath)
+      const result = parser.parse()
+      if (result) {
+        jobState.setFileDatabase(result)
+      }
     }
-
-    return null
   }
 
-  getJobNamesFromMagic (filePath) {
-    const magic = new MagicParser(filePath).parse()
-    if (magic && magic.jobnames) {
-      return magic.jobnames.split(/\s+/)
-    }
-
-    return [null]
+  getFdbParser (fdbFilePath) {
+    return new FdbParser(fdbFilePath)
   }
 
+  parseLogAndFdbFiles (jobState) {
+    this.parseLogFile(jobState)
+    this.parseFdbFile(jobState)
+
+    const fdb = jobState.getFileDatabase()
+    if (fdb) {
+      const sections = ['ps2pdf', 'dvipdf', 'dvips', 'latex', 'pdflatex']
+      let output
+
+      for (const section of sections) {
+        if (fdb[section] && fdb[section].generated) {
+          const generated = fdb[section].generated
+
+          output = generated.find(output => isPdfFile(output))
+          if (output) break
+
+          output = generated.find(output => isPsFile(output))
+          if (output) break
+
+          output = generated.find(output => isDviFile(output))
+          if (output) break
+        }
+      }
+
+      if (output) {
+        jobState.setOutputFilePath(path.resolve(jobState.getProjectPath(), path.normalize(output)))
+      }
+    }
+  }
 }

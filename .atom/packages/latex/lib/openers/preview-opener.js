@@ -1,24 +1,23 @@
 /** @babel */
 
-import childProcess from 'child_process'
 import Opener from '../opener'
+import { isPdfFile, isPsFile } from '../werkzeug'
 
 export default class PreviewOpener extends Opener {
-  open (filePath, texPath, lineNumber, callback) {
-    // TODO: Nuke this?
-    if (typeof texPath === 'function') {
-      callback = texPath
-    }
-
+  async open (filePath, texPath, lineNumber) {
     let command = `open -g -a Preview.app "${filePath}"`
     if (!this.shouldOpenInBackground()) {
-      command = command.replace(/\-g\s/, '')
+      command = command.replace(/-g\s/, '')
     }
 
-    childProcess.exec(command, (error) => {
-      if (callback) {
-        callback((error) ? error.code : 0)
-      }
-    })
+    await latex.process.executeChildProcess(command, { showError: true })
+  }
+
+  canOpen (filePath) {
+    return process.platform === 'darwin' && (isPdfFile(filePath) || isPsFile(filePath))
+  }
+
+  canOpenInBackground () {
+    return true
   }
 }

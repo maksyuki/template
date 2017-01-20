@@ -9,18 +9,19 @@ export default class Logger {
   }
 
   error (text, filePath, range, logPath, logRange) {
-    this.showMessage({ type: 'Error', text: text, filePath: filePath, range: range, logPath: logPath, logRange: logRange })
+    this.showMessage({ type: 'error', text, filePath, range, logPath, logRange })
   }
 
   warning (text, filePath, range, logPath, logRange) {
-    this.showMessage({ type: 'Warning', text: text, filePath: filePath, range: range, logPath: logPath, logRange: logRange })
+    this.showMessage({ type: 'warning', text, filePath, range, logPath, logRange })
   }
 
   info (text, filePath, range, logPath, logRange) {
-    this.showMessage({ type: 'Info', text: text, filePath: filePath, range: range, logPath: logPath, logRange: logRange })
+    this.showMessage({ type: 'info', text, filePath, range, logPath, logRange })
   }
 
   showMessage (message) {
+    message = Object.assign({ timestamp: Date.now() }, _.pickBy(message))
     if (this._group) {
       this._group.push(message)
     } else {
@@ -36,7 +37,7 @@ export default class Logger {
   }
 
   groupEnd () {
-    this.messages = _.sortBy(this._group, 'filePath', message => { return message.range || [[-1, -1], [-1, -1]] }, 'type', 'text')
+    this.messages = _.sortBy(this._group, 'filePath', message => { return message.range || [[-1, -1], [-1, -1]] }, 'type', 'timestamp')
     this._group = null
     this.showFilteredMessages()
   }
@@ -45,11 +46,24 @@ export default class Logger {
     const loggingLevel = atom.config.get('latex.loggingLevel')
     const showBuildWarning = loggingLevel !== 'error'
     const showBuildInfo = loggingLevel === 'info'
-    this.show(this._label, _.filter(this.messages, (message) => {
-      return message.type === 'Error' || (showBuildWarning && message.type === 'Warning') || (showBuildInfo && message.type === 'Info')
-    }))
+    const filteredMessages = this.messages.filter(message =>
+      message.type === 'error' || (showBuildWarning && message.type === 'warning') || (showBuildInfo && message.type === 'info'))
+
+    this.showMessages(this._label, filteredMessages)
   }
 
-  show (/* label, messages */) {}
+  static getMostSevereType (messages) {
+    return messages.reduce((type, message) => {
+      if (type === 'error' || message.type === 'error') return 'error'
+      if (type === 'warning' || message.type === 'warning') return 'warning'
+      return 'info'
+    }, undefined)
+  }
+
+  showMessages (/* label, messages */) {}
+  sync () {}
+  toggle () {}
+  show () {}
+  hide () {}
 
 }
