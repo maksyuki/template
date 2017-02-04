@@ -1,5 +1,8 @@
 "*":
   core:
+    disabledPackages: [
+      "vim-mode"
+    ]
     themes: [
       "one-dark-ui"
       "monokai"
@@ -25,6 +28,18 @@
 ".bibtex.text":
   editor:
     tabLength: 4
+".css.source.twig":
+  editor:
+    tabLength: 4
+".html.text.twig":
+  editor:
+    tabLength: 4
+".js.source.twig":
+  editor:
+    tabLength: 4
+".json.source.twig":
+  editor:
+    tabLength: 4
 ".latex.log.text":
   editor:
     tabLength: 4
@@ -34,6 +49,15 @@
 ".latex.tex.text":
   editor:
     tabLength: 4
+".source.twig":
+  editor:
+    tabLength: 4
+".source.twig.yaml":
+  editor:
+    tabLength: 4
 ".tex.text":
+  editor:
+    tabLength: 4
+".text.twig.xml":
   editor:
     tabLength: 4

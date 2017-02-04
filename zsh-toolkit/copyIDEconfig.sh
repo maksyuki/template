@@ -32,6 +32,12 @@ else
     echo "copy QtProject finished"
 fi
 
+if ! cp ~/.tmux.conf $gitpath; then
+    echo "copy .tmux.conf failed"; exit 1
+else
+    echo "copy .tmux.conf finished"
+fi
+
 if ! cp /etc/vim/vimrc $gitpath_vim_linux; then
     echo "copy vimrc failed"; exit 1
 else
