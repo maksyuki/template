@@ -187,7 +187,7 @@ if &filetype == "cpp"
 	exec "! ./%<"
 
 elseif &filetype == "c"
-	exec "! vig++ -Wall -O2 -g  % -o %<"
+	exec "! g++ -Wall -O2 -g  % -o %<"
 	exec "! ./%<"
 
 elseif &filetype == "java"
@@ -208,6 +208,7 @@ imap { {<cr>}<c-o>O<left><right>
 "------复制和粘贴------
 map <C-A> ggVG
 map <C-C> "+y
-"map <C-V> "+gp   linux can not support this
+"C-V can be used in GUI mode
+map <C-V> "+gp
 map <F3> :Ve!<CR>
 map <F4> :e.<CR>
