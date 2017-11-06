@@ -117,8 +117,11 @@ if &filetype == "cpp"
     let l = l + 1 | call setline(l,'using namespace std;')
     let l = l + 1 | call setline(l,'')
     let l = l + 1 | call setline(l,'#define CFF freopen ("in", "r", stdin)')
+    let l = l + 1 | call setline(l,'#define CFO freopen ("out", "w", stdout)')
     let l = l + 1 | call setline(l,'#define CPPFF ifstream cin ("in")')
+    let l = l + 1 | call setline(l,'#define CPPFO ofstream cout ("out")')
     let l = l + 1 | call setline(l,'#define	DB(ccc)	cout << #ccc << " = " << ccc << endl')
+    let l = l + 1 | call setline(l,'#define	DBT printf("time used: %.2lfs\n", (double) clock() / CLOCKS_PER_SEC)')
     let l = l + 1 | call setline(l,'#define PB push_back')
     let l = l + 1 | call setline(l,'#define MP(A, B) make_pair(A, B)')
     let l = l + 1 | call setline(l,'')
@@ -136,8 +139,10 @@ if &filetype == "cpp"
     let l = l + 1 | call setline(l,'')
     let l = l + 1 | call setline(l,'int main()')
     let l = l + 1 | call setline(l,'{')
-    let l = l + 1 | call setline(l,'    //CFF;')
-    let l = l + 1 | call setline(l,'    //CPPFF;')
+    let l = l + 1 | call setline(l,'#ifdef LOCAL')
+    let l = l + 1 | call setline(l,'    CFF;')
+    let l = l + 1 | call setline(l,'    //CFO;')
+    let l = l + 1 | call setline(l,'#endif')
     let l = l + 1 | call setline(l,'    ')
     let l = l + 1 | call setline(l,'    return 0;')
     let l = l + 1 | call setline(l,'}')
@@ -202,7 +207,7 @@ map <F9> :call CR()<CR>
 func! CR()
 exec "w"
 if &filetype == "cpp"
-	exec "! g++ -Wall -O2 -g  % -o %<"
+	exec "! g++ -D LOCAL -Wall -O2 -g  % -o %<"
 	exec "! %<"
 
 elseif &filetype == "c"
