@@ -207,7 +207,11 @@ map <F9> :call CR()<CR>
 func! CR()
 exec "w"
 if &filetype == "cpp"
-	exec "! g++ -D LOCAL -Wall -O2 -g  % -o %<"
+    set makeprg=g++\ -D\ LOCAL\ -Wall\ -O2\ -g\ %\ -o\ %<
+    :make
+    :cl
+    ":cw
+	"exec "! g++ -D LOCAL -Wall -O2 -g  % -o %<"
 	exec "! %<"
 
 elseif &filetype == "c"
@@ -234,6 +238,8 @@ map <C-C> "+y
 map <C-V> "+gp
 map <F3> :Ve!<CR>
 map <F4> :e.<CR>
+map <F5> :cn<CR>
+map <F6> :cp<CR>
 "inoremap ( ()<LEFT>
 "inoremap [ []<LEFT>
 "inoremap { {}<LEFT>
