@@ -1,0 +1,36 @@
+source $TELENV
+
+# set view move
+set roamInc=96
+button wheel_up      "roam y -$roamInc"
+button wheel_down    "roam y $roamInc"
+button Swheel_up     "roam x -$roamInc"
+button Swheel_down   "roam x $roamInc"
+set buttonfactor=0.5
+button Cwheel_up     "zoom in $buttonfactor"
+button Cwheel_down   "zoom out $buttonfactor"
+
+
+funckey s move
+funckey v copy
+funckey d done
+funckey f oops
+funckey c cancel
+funckey z rats net
+funckey x unrats all
+
+funckey w add connect
+
+
+
+funckey ' ' iangle 90
+
+
+### User Preferences section
+### This section is computer generated.
+### Please do not modify to the end of the file.
+### Place your hand edits above this section.
+###
+set padpath = $padpath "G:/PROJECT_DEVELOPMENT/ALLEGRO/FY020-ALLEGRO 6层英特尔Z8300电脑主板PCB设计实战视频配套素材/DEMO/LIB/"
+set psmpath = $psmpath "G:/PROJECT_DEVELOPMENT/ALLEGRO/FY020-ALLEGRO 6层英特尔Z8300电脑主板PCB设计实战视频配套素材/DEMO/LIB/"
+set devpath = $devpath "G:/PROJECT_DEVELOPMENT/ALLEGRO/FY020-ALLEGRO 6层英特尔Z8300电脑主板PCB设计实战视频配套素材/DEMO/LIB/"
