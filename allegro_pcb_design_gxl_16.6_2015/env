@@ -38,10 +38,10 @@ set BGA1_0 = 39.37
 set BGA0_8 = 31.49
 #set BGA0_8 = 150
 
-alias Up    ipick  0  $BGA1_27
-alias Down  ipick  0 -$BGA1_27
-alias Left  ipick    -$BGA1_27 0
-alias Right ipick    $BGA1_27 0
+alias Up     ipick 0  $BGA1_27
+alias Down   ipick 0 -$BGA1_27
+alias Left   ipick   -$BGA1_27 0
+alias Right  ipick    $BGA1_27 0
 
 alias CUp    ipick 0  $BGA1_0
 alias CDown  ipick 0 -$BGA1_0
