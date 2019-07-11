@@ -10,27 +10,45 @@ set buttonfactor=0.5
 button Cwheel_up     "zoom in $buttonfactor"
 button Cwheel_down   "zoom out $buttonfactor"
 
-
 funckey s move
 funckey v copy
 funckey d done
 funckey f oops
-funckey c cancel
+funckey c delete
 funckey z rats net
-funckey x unrats all
-
+funckey C unrats all
 funckey w add connect
+funckey e slide
+funckey r shape select
+funckey t shape add
+funckey q change
+funckey ' ' iangle 45
 
+# Unit:millimeter
+set BGA1_27 = 1.27
+set BGA1_0 = 1.0
+set BGA0_8 = 0.8
+#set BGA0_8 = 3.81
 
+# Unit: mil
+set BGA1_27 = 50
+#set BGA1_0 = 25.5900
+set BGA1_0 = 39.37
+#set BGA0_8 = 31.5
+set BGA0_8 = 31.49
+#set BGA0_8 = 150
 
-funckey ' ' iangle 90
+alias Up    ipick  0  $BGA1_27
+alias Down  ipick  0 -$BGA1_27
+alias Left  ipick    -$BGA1_27 0
+alias Right ipick    $BGA1_27 0
 
+alias CUp    ipick 0  $BGA1_0
+alias CDown  ipick 0 -$BGA1_0
+alias CLeft  ipick   -$BGA1_0 0
+alias CRight ipick    $BGA1_0 0
 
-### User Preferences section
-### This section is computer generated.
-### Please do not modify to the end of the file.
-### Place your hand edits above this section.
-###
-set padpath = $padpath "G:/PROJECT_DEVELOPMENT/ALLEGRO/FY020-ALLEGRO 6层英特尔Z8300电脑主板PCB设计实战视频配套素材/DEMO/LIB/"
-set psmpath = $psmpath "G:/PROJECT_DEVELOPMENT/ALLEGRO/FY020-ALLEGRO 6层英特尔Z8300电脑主板PCB设计实战视频配套素材/DEMO/LIB/"
-set devpath = $devpath "G:/PROJECT_DEVELOPMENT/ALLEGRO/FY020-ALLEGRO 6层英特尔Z8300电脑主板PCB设计实战视频配套素材/DEMO/LIB/"
+alias SUp    ipick 0  $BGA0_8
+alias SDown  ipick 0 -$BGA0_8
+alias SLeft  ipick   -$BGA0_8 0
+alias SRight ipick    $BGA0_8 0
