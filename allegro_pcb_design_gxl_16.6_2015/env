@@ -10,19 +10,25 @@ set buttonfactor=0.5
 button Cwheel_up     "zoom in $buttonfactor"
 button Cwheel_down   "zoom out $buttonfactor"
 
+
+funckey a copy
 funckey s move
-funckey v copy
 funckey d done
 funckey f oops
 funckey c delete
+funckey v delay tune
 funckey z rats net
 funckey C unrats all
+funckey q change
 funckey w add connect
 funckey e slide
-funckey r shape select
-funckey t shape add
-funckey q change
+funckey r shape add
+funckey t shape select
+funckey g shape edit boundary
+funckey b spread between voids
 funckey ' ' iangle 45
+funckey 1 color192
+funckey 2 cmgr
 
 # Unit:millimeter
 set BGA1_27 = 1.27
@@ -30,12 +36,15 @@ set BGA1_0 = 1.0
 set BGA0_8 = 0.8
 #set BGA0_8 = 3.81
 
+
 # Unit: mil
 set BGA1_27 = 50
+
 #set BGA1_0 = 25.5900
 set BGA1_0 = 39.37
-#set BGA0_8 = 31.5
-set BGA0_8 = 31.49
+
+
+set BGA0_8 = 31.50
 #set BGA0_8 = 150
 
 alias Up     ipick 0  $BGA1_27
@@ -52,3 +61,16 @@ alias SUp    ipick 0  $BGA0_8
 alias SDown  ipick 0 -$BGA0_8
 alias SLeft  ipick   -$BGA0_8 0
 alias SRight ipick    $BGA0_8 0
+
+### User Preferences section
+### This section is computer generated.
+### Please do not modify to the end of the file.
+### Place your hand edits above this section.
+###
+set padpath = $padpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
+set psmpath = $psmpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
+set devpath = $devpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
+set ads_autosaverevs = 6
+set logic_edit_enabled
+set autosave_time = 10
+set autosave
