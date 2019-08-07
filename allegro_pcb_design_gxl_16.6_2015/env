@@ -27,8 +27,11 @@ funckey t shape select
 funckey g shape edit boundary
 funckey b spread between voids
 funckey ' ' iangle 45
-funckey 1 color192
-funckey 2 cmgr
+funckey 1 add line
+funckey 2 add text
+funckey 3 color192
+funckey 4 cmgr
+
 
 # Unit:millimeter
 set BGA1_27 = 1.27
@@ -62,13 +65,17 @@ alias SDown  ipick 0 -$BGA0_8
 alias SLeft  ipick   -$BGA0_8 0
 alias SRight ipick    $BGA0_8 0
 
+
+
+
+
 ### User Preferences section
 ### This section is computer generated.
 ### Please do not modify to the end of the file.
 ### Place your hand edits above this section.
 ###
-set padpath = $padpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
-set psmpath = $psmpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
+set padpath = $padpath G:/project_development/allegro/allegro_pcb_package_design/my_package/FLASH/ G:/project_development/allegro/allegro_pcb_package_design/my_package/LIB/ G:/project_development/allegro/allegro_pcb_package_design/my_package/PAD/
+set psmpath = $psmpath G:/project_development/allegro/allegro_pcb_package_design/my_package/FLASH/ G:/project_development/allegro/allegro_pcb_package_design/my_package/PAD/ G:/project_development/allegro/allegro_pcb_package_design/my_package/LIB/
 set devpath = $devpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
 set ads_autosaverevs = 6
 set logic_edit_enabled
