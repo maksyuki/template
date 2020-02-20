@@ -74,10 +74,13 @@ alias SRight ipick    $BGA0_8 0
 ### Please do not modify to the end of the file.
 ### Place your hand edits above this section.
 ###
-set padpath = $padpath G:/project_development/allegro/allegro_pcb_package_design/my_package/FLASH/ G:/project_development/allegro/allegro_pcb_package_design/my_package/LIB/ G:/project_development/allegro/allegro_pcb_package_design/my_package/PAD/
-set psmpath = $psmpath G:/project_development/allegro/allegro_pcb_package_design/my_package/FLASH/ G:/project_development/allegro/allegro_pcb_package_design/my_package/PAD/ G:/project_development/allegro/allegro_pcb_package_design/my_package/LIB/
-set devpath = $devpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
+set padpath = $padpath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/PAD/
+set psmpath = $psmpath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/PACKAGE/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/FLASH/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/SHAPE
+set devpath = $devpath
+set steppath = $steppath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/MODEL/
 set ads_autosaverevs = 6
+unset infinite_cursor_bug_nt
+unset pcb_cursor
 set logic_edit_enabled
 set autosave_time = 10
 set autosave
