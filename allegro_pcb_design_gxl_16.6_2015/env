@@ -75,9 +75,9 @@ alias SRight ipick    $BGA0_8 0
 ### Place your hand edits above this section.
 ###
 set padpath = $padpath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/PAD/
-set psmpath = $psmpath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/PACKAGE/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/FLASH/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/SHAPE
+set psmpath = $psmpath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/PACKAGE/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/FLASH/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/SHAPE C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/OTHER/
 set devpath = $devpath
-set steppath = $steppath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/MODEL/
+set steppath = $steppath C:/Users/abcd/Documents/GitHub/cadence_model_lib/
 set ads_autosaverevs = 6
 unset infinite_cursor_bug_nt
 unset pcb_cursor
