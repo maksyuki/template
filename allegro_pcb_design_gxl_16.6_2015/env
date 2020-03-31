@@ -31,7 +31,8 @@ funckey 1 add line
 funckey 2 add text
 funckey 3 color192
 funckey 4 cmgr
-
+funckey 5 show measure
+funckey 6 show element
 
 # Unit:millimeter
 set BGA1_27 = 1.27
