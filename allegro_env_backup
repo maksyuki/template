@@ -1,0 +1,83 @@
+source $TELENV
+
+# set view move
+set roamInc=96
+button wheel_up      "roam y -$roamInc"
+button wheel_down    "roam y $roamInc"
+button Swheel_up     "roam x -$roamInc"
+button Swheel_down   "roam x $roamInc"
+set buttonfactor=0.5
+button Cwheel_up     "zoom in $buttonfactor"
+button Cwheel_down   "zoom out $buttonfactor"
+
+
+funckey a copy
+funckey s move
+funckey d done
+funckey f oops
+funckey c delete
+funckey v delay tune
+funckey z rats net
+funckey C unrats all
+funckey q change
+funckey w add connect
+funckey e slide
+funckey r shape add
+funckey t shape select
+funckey g shape edit boundary
+funckey b spread between voids
+funckey ' ' iangle 45
+funckey 1 add line
+funckey 2 add text
+funckey 3 color192
+funckey 4 cmgr
+
+
+# Unit:millimeter
+set BGA1_27 = 1.27
+set BGA1_0 = 1.0
+set BGA0_8 = 0.8
+#set BGA0_8 = 3.81
+
+
+# Unit: mil
+set BGA1_27 = 50
+
+#set BGA1_0 = 25.5900
+set BGA1_0 = 39.37
+
+
+set BGA0_8 = 31.50
+#set BGA0_8 = 150
+
+alias Up     ipick 0  $BGA1_27
+alias Down   ipick 0 -$BGA1_27
+alias Left   ipick   -$BGA1_27 0
+alias Right  ipick    $BGA1_27 0
+
+alias CUp    ipick 0  $BGA1_0
+alias CDown  ipick 0 -$BGA1_0
+alias CLeft  ipick   -$BGA1_0 0
+alias CRight ipick    $BGA1_0 0
+
+alias SUp    ipick 0  $BGA0_8
+alias SDown  ipick 0 -$BGA0_8
+alias SLeft  ipick   -$BGA0_8 0
+alias SRight ipick    $BGA0_8 0
+
+
+
+
+
+### User Preferences section
+### This section is computer generated.
+### Please do not modify to the end of the file.
+### Place your hand edits above this section.
+###
+set padpath = $padpath G:/project_development/allegro/allegro_pcb_package_design/my_package/FLASH/ G:/project_development/allegro/allegro_pcb_package_design/my_package/LIB/ G:/project_development/allegro/allegro_pcb_package_design/my_package/PAD/
+set psmpath = $psmpath G:/project_development/allegro/allegro_pcb_package_design/my_package/FLASH/ G:/project_development/allegro/allegro_pcb_package_design/my_package/PAD/ G:/project_development/allegro/allegro_pcb_package_design/my_package/LIB/
+set devpath = $devpath G:/project_development/allegro/intel_z8300_computer_pcb/DEMO/LIB/
+set ads_autosaverevs = 6
+set logic_edit_enabled
+set autosave_time = 10
+set autosave
