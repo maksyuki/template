@@ -25,15 +25,15 @@
 
 /*
 #########################################################################################                                                                    
-#                  	Command: FYAL                                     					#
+#                  	Command: MDAL                                     					#
 #                  	Skill File: align.il          				         				#
 #                  	How To Load: Command> (load("align.il"))							#
-#               	How To Execute: Command> FYAL  			   							#
+#               	How To Execute: Command> MDAL  			   							#
 #              	 	Write by: Wanghh Download Addr:https://github.com/whh5118/GTOpen 	#
 #########################################################################################
 */
 
-axlCmdRegister( "FYAL" 'aln  ?cmdType "interactive" ?doneCmd 'alnDone ?cancelCmd 'alnCancel )
+axlCmdRegister( "MDAL" 'aln  ?cmdType "interactive" ?doneCmd 'alnDone ?cancelCmd 'alnCancel )
 when( (axlVersion('version) >= 16.3 && !axlUIMenuFind(nil "aln")) ; since 16.3
 	axlUIMenuRegister( "move" '( ("&Align" "aln") ) ) 
 )
