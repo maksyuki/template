@@ -10,25 +10,39 @@ set buttonfactor=0.5
 button Cwheel_up     "zoom in $buttonfactor"
 button Cwheel_down   "zoom out $buttonfactor"
 
-
-funckey a copy
-funckey s move
-funckey d done
-funckey f oops
-funckey c delete
-funckey v delay tune
-funckey z rats net
-funckey C unrats all
 funckey q change
+funckey Q add line
 funckey w add connect
+funckey W add text
 funckey e slide
 funckey r shape add
 funckey t shape select
+funckey y fix
+funckey Y unfix
+
+funckey a copy
+funckey A assign color
+funckey s move
+funckey S spin
+funckey d done
+funckey f oops
+funckey F mirror
 funckey g shape edit boundary
+funckey G define grid
+funckey h hilight
+funckey H dehilight
+
+funckey z rats net
+funckey Z zcopy shape
+funckey x align components
+funckey c delete
+funckey C unrats all
+funckey v delay tune
 funckey b spread between voids
+
 funckey ' ' iangle 45
-funckey 1 add line
-funckey 2 add text
+funckey 1 status
+funckey 2 xsection
 funckey 3 color192
 funckey 4 cmgr
 funckey 5 show measure
@@ -75,10 +89,10 @@ alias SRight ipick    $BGA0_8 0
 ### Please do not modify to the end of the file.
 ### Place your hand edits above this section.
 ###
-set padpath = $padpath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/PAD/
-set psmpath = $psmpath C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/PACKAGE/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/FLASH/ C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/SHAPE C:/Users/abcd/Documents/GitHub/cadence_pcb_lib/OTHER/
+set padpath = $padpath G:/project_development/GitHub/cadence_pcb_lib/PAD/
+set psmpath = $psmpath G:/project_development/GitHub/cadence_pcb_lib/PACKAGE/ G:/project_development/GitHub/cadence_pcb_lib/FLASH/ G:/project_development/GitHub/cadence_pcb_lib/SHAPE/ G:/project_development/GitHub/cadence_pcb_lib/OTHER/
 set devpath = $devpath
-set steppath = $steppath C:/Users/abcd/Documents/GitHub/cadence_model_lib/
+set steppath = $steppath G:/project_development/GitHub/cadence_model_lib/
 set ads_autosaverevs = 6
 unset infinite_cursor_bug_nt
 unset pcb_cursor

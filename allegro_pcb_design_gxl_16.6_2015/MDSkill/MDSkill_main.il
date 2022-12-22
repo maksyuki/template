@@ -166,7 +166,7 @@ prog((file port InstallPath tt)
         )
     )
     close(port)
-    MDSkill_global->InstallPath = "C:/Users/abcd/Documents/GitHub/template/allegro_pcb_design_gxl_16.6_2015"
+    MDSkill_global->InstallPath = "G:/project_development/GitHub/template/allegro_pcb_design_gxl_16.6_2015"
     load(strcat(MDSkill_global->InstallPath "/MDSkill/SkillCode/MDSkill_CutClines_Lines_Shapes.il"))
     load(strcat(MDSkill_global->InstallPath "/MDSkill/SkillCode/MDSkill_Cline_Cross.il"))
     load(strcat(MDSkill_global->InstallPath "/MDSkill/SkillCode/MDSkill_Calculator.il"))
