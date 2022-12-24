@@ -17,8 +17,8 @@ funckey W add text
 funckey e slide
 funckey r shape add
 funckey t shape select
-funckey y fix
-funckey Y unfix
+funckey u fix
+funckey U unfix
 
 funckey a copy
 funckey A assign color
@@ -34,7 +34,7 @@ funckey H dehilight
 
 funckey z rats net
 funckey Z zcopy shape
-funckey x align components
+funckey X align components
 funckey c delete
 funckey C unrats all
 funckey v delay tune
