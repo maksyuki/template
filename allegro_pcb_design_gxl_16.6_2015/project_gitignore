@@ -28,3 +28,5 @@ Backup of *
 *.zip
 *.err
 backup/
+*.dmp
+*.SAV
