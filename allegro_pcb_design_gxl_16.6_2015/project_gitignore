@@ -28,5 +28,7 @@ Backup of *
 *.zip
 *.err
 backup/
-*.dmp
+NETLIST
+*.cnv
 *.SAV
+*.dmp
